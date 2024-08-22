@@ -260,7 +260,7 @@ class Getillustrations:
         tiles = EsriImagery()
         map_with_points = tiles * points_plot
         map_with_points.opts(title='Linguistic cluster with Physical Geography', tools=['hover'])
-        hv.save(map_with_points, 'illustrations/cluster_map_with_physical_geography.html', backend='bokeh')
+        hv.save(map_with_points, 'cluster_map_with_physical_geography.html', backend='bokeh')
 
     def plot_tau_tui(self):
         "returns a bivariate distribution of Kendall's Tau scores and TUI scores"
@@ -341,7 +341,7 @@ def get_plots():
     ill.threshold_corr_plot()
     ill.plot_dendrograms()
     ill.plot_difference_heatmap()
-    ill.ling_cluster_on_geog()
+    # ill.ling_cluster_on_geog()
     ill.plot_cluster_with_physical_geography()
     ill.plot_chi2_and_pvalues()
     print("All graphs outputed to illustrations folder")
