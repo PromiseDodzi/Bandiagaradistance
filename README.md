@@ -44,3 +44,29 @@ After cldf conversion, the command line instruction
 is used to take the CLDF dataset (from the metadata file) and using edictor to process it into a wordlist.  
 The output is `heathdogon-ungrouped` in the root folder.
 
+## matrices
+This folder contains the geographical data `Geodata.csv` and a linguistics distance matrix 'linguistic_distance_matrix.csv'.
+The linguistic distance matrix is obtained after linguistic data is filtered by running 'coverage.py', and then `distance.py`
+
+# illustrations
+This folder contains all the graphs and illustrations contained in the paper.
+These are obtained from running `get_illustrations.py` in the root folder
+
+# Command line displays
+All statistics in the paper can be obtained by running `get_statistics.py`.  
+This displays all statistics
+
+# Commands
+Prior to running the following commands, clone this repository and run pip install -r requirements.txt
+
+* `python prepare_manual_data.py`, runs the segmentation rule 'utils.py' on manually processed data by calling on various functions in 'functions.py' and outputs `manually-edited.csv` into the `raw` folder.
+* `pip install -e .` to install all dependencies for cldf data conversion
+* run cldfbench lexibank.makecldf command by replacing address in the following command with a path to glottolog, concepticon and clts - which can be downloaded
+  `cldfbench lexibank.makecldf --glottolog="address/glottolog" --concepticon="address/concepticon-data" --clts="address/clts" --glottolog-version=v5.0 --concepticon-version=v3.2.0 --clts-version=v2.3.0 heathdogon`
+* convert cldf data into wordlist by running `edictor wordlist --dataset="cldf/cldf-metadata.json" \
+		--namespace='{"id": "local_id", "language_id": "doculect", "variety": "variety", "concept_name": "concept","value": "value", "form": "form", "segments": "tokens","plural_segments": "plural_tokens", "comment": "note", "concept_swadesh": "swadesh"}' \
+		--name="heathdogon-ungrouped`
+* `python coverage.py`, filters data according to coverage by favoring breath.
+* `python distance.py`, undertakes automatic cognate detction, cognate alignment and linguistic distance calculation, and outputs results into `matrices folder`
+* `python get_illustrations.py`, undertakes calculates and outputs all graphs and illustrations used in the paper.
+* `python get_statistics.py`, prints all statistics to the command line
