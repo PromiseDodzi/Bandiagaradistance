@@ -6,12 +6,56 @@ import numpy as np
 class NounParser:
     def __init__(self):
         self.consonants = {"b", "c", "d", "f", "g", "ɡ", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "y", "z", "ʔ", "ɲ", "ŋ", "ɣ"}
-        self.exceptions = ["nd", "nt", "ŋg", "ŋɡ", "ŋk", "ɲj", "mb","mp" ]
-        self.vowels = {"ɛ̌", "ɔ̌", "ɛ̂", "ɔ̂", "ɛ́", "ɔ́", "ɛ̀", "ɔ̀", "ì", "í", "ǔ", "û",'ê', 'ě', 'è', 'é', 'ô', 'ò', 'ǒ', 'ó', 'ǎ', 
+        self.exceptions = ["nd", "n.d", "nt", "n.t", "ŋg","ŋ.g", "ŋɡ","ŋ.ɡ", "ŋk","ŋ.k", "ɲj","ɲ.j","mb","m.b", "mp","m.p", "dʒ", "d.ʒ"]
+        self.vowels=      {"ɛ̌", "ɔ̌", "ɛ̂", "ɔ̂", "ɛ́", "ɔ́", "ɛ̀", "ɔ̀", "ì", "í", "ǔ", "û",'ê', 'ě', 'è', 'é', 'ô', 'ò', 'ǒ', 'ó', 'ǎ', 
                         'â', 'à', 'á', 'ɛ̌', 'ɛ̂', 'ɛ́', 'ɛ̀', 'û', 'ǔ', 'ú', 'ù', 'ǐ', 'î', 'í', 'ì', ' ̀ɔ ', 'ɔ́', 'ɔ̌', 'ɔ̂',
-                        "i", "e", "ɛ", "u", "o", "ɔ", "a"}
+                        "i", "e", "ɛ", "u", "o", "ɔ", "a", "ú"}
         self.extra_material={ 'ǎ': 'á', 'ê': 'è', 'ô': 'ò', 'ě': 'é','ǐ': 'í', 'î': 'ì', 'ǒ': 'ó', 'â': 'à', 'ɛ́': 'ɛ́', 'ɛ̀': 'ɛ̀', 
                              'ǔ': 'ú', 'í': 'í','ì': 'ì'} 
+
+    def counts(self, word):
+        "returns the number of vowels and consonants, and the list of vowels and consonants in a word"
+        vowel_list = [letter for letter in word if letter in self.vowels]
+        vowel_count = len(vowel_list)
+        
+        consonant_list = []
+        consonant_count = 0
+        i = 0
+        while i < len(word):
+            # Check if any exception matches starting from the current position
+            matched_exception = False
+            for exception in self.exceptions:
+                if word[i:i+len(exception)] == exception:
+                    matched_exception = True
+                    i += len(exception)  
+                    consonant_list.append(exception)  
+                    consonant_count += 1
+                    break
+            
+            if not matched_exception and word[i] in self.consonants:
+                consonant_count += 1
+                consonant_list.append(word[i])  
+                i += 1 
+            elif not matched_exception:
+                i += 1  
+        return vowel_count, consonant_count, vowel_list, consonant_list
+
+        
+    def exception_in_penultimate_position(self, word):
+        "inserts a space between exceptions in penultimate position and following vowels"
+        vowel_count, conso_count, vowel_list, conso_list = self.counts(word)
+        for item in self.exceptions:
+            if item in word:
+                last_conso_index = word.rfind(conso_list[-1])
+                vowel_indices = [word.rfind(vowel) for vowel in vowel_list if vowel in word]
+                
+                if vowel_indices:
+                    last_vowel_index = max(vowel_indices)
+                    if last_vowel_index > last_conso_index:
+                        word = word.replace(conso_list[-1], f"{conso_list[-1]}-").replace("--", "-")
+            else:
+                word = word
+        return word
 
     def parse_off_final_nasals(self, item):
         if item and item[-1] =="ⁿ":
@@ -172,11 +216,92 @@ class NounParser:
         return  self.hyphen_space(new_word.replace("--", "-"))
 
 
+    def special_nouns(self, item):
+        "handles specific cases"
+        if "n-ɛ̀" in item:
+            if len(item) > 4:
+                new_item = item.replace("n-ɛ̀", "-nɛ̀")
+            else:
+                new_item = item
+        else:
+            new_item = item
+        return new_item
+
+
 
 class VerbParser(NounParser):
     def __init__(self):
        super().__init__()
+
+    def special_verbs(self, word):
+        "performs parses on words that remain unparsed or overparsed"
         
+        vowel_count, conso_count, vowel_list, conso_list = self.counts(word) 
+        new_word = ""
+        
+        # Check if the word has exactly 3 vowels and 3 consonants
+        if conso_count == 3 and vowel_count == 3: #solving issues in which three consonants are concerned
+            conso_idx = 0
+            for i, letter in enumerate(word):
+                if letter in conso_list and conso_idx < 3:
+                    if conso_idx == 1:  
+                        new_word += f"{letter}-"
+                    elif conso_idx == 2: 
+                        new_word += f"-{letter}"
+                    else:
+                        new_word += letter
+                    conso_idx += 1
+                else:
+                    new_word += letter
+        elif conso_count==2 and vowel_count <=3: #solving issues where two consonants are concerned
+            conso_idx=0
+            for i, letter in enumerate(word):
+                if letter in conso_list and conso_idx < len(word):
+                    if conso_idx==1:
+                        new_word += f"{letter}-"
+                    else:
+                        new_word += letter
+                    conso_idx +=1
+                else:
+                    if letter=="-":
+                        new_word += ""
+                    else:
+                        new_word += letter
+        elif conso_count==2 and 2<vowel_count<=3: #handles wrong parsings where two consonants start a word, and this is followed by two vowels
+            if word[word.index(conso_list[0])+1]== conso_list[1] and word[word.index(vowel_list[0])+1]==vowel_list[1]:
+                for i, letter in enumerate(word):
+                    if letter == vowel_list[0]:
+                        new_word += f"-{letter}-"
+                    else:
+                        new_word += letter
+                    conso_idx +=1
+        elif "-nɛ̀" in word and word.index("-nɛ̀") >2 : #solving the "-nɛ̀"problem
+            new_word=word.replace("-nɛ̀", "n-ɛ̀")
+        else:
+            new_word = word  
+
+        
+        except_list = {"pándí": lambda x: x.replace("ndí", "nd-í"),
+                       "díŋɡè": lambda x: x.replace("ɡè", "ɡ-è"),
+                       "díŋɡé":lambda x: x.replace("ɡè", "ɡ-é"),
+                       "tʃɛ́ndí": lambda x: x.replace("dí", "d-í"),
+                       "dúŋɡó": lambda x: x.replace("ɡó", "ɡ-ó"),
+                       "tíŋɡó":lambda x: x.replace("ɡó", "ɡ-ó"),
+                       "pɛ̀ŋɡí":lambda x: x.replace("ɡí", "ɡ-í"),
+                       "kój-ùɡù": lambda x: x.replace("ɡù", "-ɡù"),
+                       "kóɡ-ùjù":lambda x: x.replace("jù", "-jù"),
+                       "béɡú-béɡé": (lambda x: x.replace("ɡú", "ɡ-ú").replace("ɡé", "ɡ-é")),
+                       "kɛ́-mjí": lambda x: x.replace("mjí", "m-jí"),
+                       "dòmbó": lambda x: x.replace("bó", "b-ó"),
+                       "ìbì-páɡílé":lambda x: x.replace("páɡílé", "páɡ-í-lé"),
+                       "ìbì-páɡílé":lambda x: x.replace("páɡílé", "páɡ-í-lé")}
+    
+        if new_word in except_list:
+            return except_list[new_word](new_word)
+        else:
+            return new_word.replace("--", "-")
+
+
     def consonant_count(self, item):
         """
         counts number of consonants in words
@@ -218,7 +343,6 @@ class VerbParser(NounParser):
         return new_word
 
     
-   
     def verify_exceptions(self, word):
         """
         verifies that consonant ensembles are not parsed as different consonants and reparses long words with consonant ensembles
@@ -299,66 +423,77 @@ class VerbParser(NounParser):
                     word = word[:i + 1] + '-' + word[i + 1:]
                     consonant_count = 0
         return self.post_coda(word)
-   
+        
+    #long words
+    def space_work(self, word):
+        """Handles situations in which a space occurs in long words"""
+        space_index = word.find(" ")
+        if space_index != -1 and len(word) > space_index + 1 and word[space_index + 1] in self.consonants:
+            if len(word) > space_index + 2 and word[space_index + 2] == "-":
+                word = word[:space_index + 2] + word[space_index + 3:]
+            word = word.replace(" ", "+")
+        else:
+            word = word.replace(" ", "")
+            
+        return word
+
+    def stubborn_words(self, word):
+        """Parses unresponsive long words"""
+        formatted_word = ""
+        if 4 < len(word) <= 11 and "-" not in word:
+            formatted_word = word[:3] + "-" + word[3:]
+        elif word in ["ɡìyɛ́", "ɡíyɛ́"]:
+            formatted_word = word[:3] + "-ɛ́"
+        elif word in ["ɡɛ̀wɛ́"]:
+            formatted_word = word[:4] + "-ɛ́"
+        else:
+            formatted_word = word
+        return formatted_word
+
+    def extra_hyphen_for_long_words(self, word):
+        """introduces extra hyphen before consonants where neccessary"""
+        new_word=""
+        for letter in word:
+            if len(word)>=3 and word.index(letter) > 2 and letter in self.consonants:
+                if word[word.index(letter)-1] in self.vowels and (word[word.index(letter)-2]=="-"):
+                    new_word +=f"-{letter}"
+                else:
+                    new_word += f"{letter}"
+            else:
+                new_word +=letter
+        return new_word   
     
     def long_words(self, item):
-        """Parses long words"""
-    
-        def space_work(word):
-            """Handles situations in which a space occurs in the word"""
-            space_index = word.find(" ")
-            if space_index != -1 and len(word) > space_index + 1 and word[space_index + 1] in self.consonants:
-                if len(word) > space_index + 2 and word[space_index + 2] == "-":
-                    word = word[:space_index + 2] + word[space_index + 3:]
-                word = word.replace(" ", "+")
-            else:
-                word = word.replace(" ", "")
-                
-            return word
-    
-        def stubborn_words(word):
-            """Parses unresponsive words"""
-            formatted_word = ""
-            if 4 < len(word) <= 11 and "-" not in word:
-                formatted_word = word[:3] + "-" + word[3:]
-            elif word in ["ɡìyɛ́", "ɡíyɛ́"]:
-                formatted_word = word[:3] + "-ɛ́"
-            elif word in ["ɡɛ̀wɛ́"]:
-                formatted_word = word[:4] + "-ɛ́"
-            else:
-                formatted_word = word
-            return formatted_word
-    
-        def long_parse(item):
-            """Parses long words of more than 11 characters"""
-            new_word_2 = ""
-            if len(item) >= 11:
-                counter = 0
-                new_word = ""
-                for idx, char in enumerate(item):
-                    if char in self.consonants:
-                        counter += 1
-                        if counter % 2 == 0 and idx + 1 < len(item) and item[idx + 1] not in self.consonants and item[idx + 1] in self.vowels:
-                            try:
-                                if item[idx + 2] not in self.vowels and (idx - 1 >= 0 and item[idx - 1] != "+"):
-                                    new_word += f"{char}-"
-                                elif item[idx + 2] not in self.vowels and (idx - 1 >= 0 and item[idx - 1] != "+") and item[idx-1] in self.vowels :
-                                    new_word += f"{char}-"
-                                else:
-                                    new_word += char
-                            except IndexError:
+        """Parses long words of more than 11 characters"""
+        item = self.space_work(item)
+        
+        new_word_2 = ""
+        if len(item) >= 11:
+            counter = 0
+            new_word = ""
+            for idx, char in enumerate(item):
+                if char in self.consonants:
+                    counter += 1
+                    if counter % 2 == 0 and idx + 1 < len(item) and item[idx + 1] not in self.consonants and item[idx + 1] in self.vowels:
+                        try:
+                            if item[idx + 2] not in self.vowels and (idx - 1 >= 0 and item[idx - 1] != "+"):
                                 new_word += f"{char}-"
-                        else:
-                            new_word += char
+                            elif item[idx + 2] not in self.vowels and (idx - 1 >= 0 and item[idx - 1] != "+") and item[idx-1] in self.vowels :
+                                new_word += f"{char}-"
+                            else:
+                                new_word += char
+                        except IndexError:
+                            new_word += f"{char}-"
                     else:
                         new_word += char
-                new_word_2 = new_word
-            else:
-                new_word_2 = item
-            return new_word_2.replace("+", "-")
+                else:
+                    new_word += char
+            new_word_2 = new_word
+        else:
+            new_word_2 = item
                 
-        item = space_work(item)
-        result = stubborn_words(long_parse(item))
+        result = self.stubborn_words(new_word_2.replace("+", "-"))
+        result=self.extra_hyphen_for_long_words(result)
         return self.verify_exceptions(result)
 
     

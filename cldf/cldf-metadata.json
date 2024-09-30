@@ -7,12 +7,12 @@
     "dc:related": null,
     "dc:source": "sources.bib",
     "dc:title": "CLDF dataset derived from Heath et al's \"Dogon Comparative Wordlist\" from 2016",
-    "dcat:accessURL": "https://github.com/languageorphans/heathdogon",
+    "dcat:accessURL": "https://github.com/PromiseDodzi/Bandiagaradistance",
     "prov:wasDerivedFrom": [
         {
-            "rdf:about": "https://github.com/languageorphans/heathdogon",
+            "rdf:about": "https://github.com/PromiseDodzi/Bandiagaradistance",
             "rdf:type": "prov:Entity",
-            "dc:created": "v0.2.alpha-7-g0ca1248",
+            "dc:created": "9522093a",
             "dc:title": "Repository"
         },
         {
@@ -53,7 +53,7 @@
     "tables": [
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
-            "dc:extent": 15249,
+            "dc:extent": 16271,
             "tableSchema": {
                 "columns": [
                     {
@@ -253,7 +253,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#ParameterTable",
-            "dc:extent": 944,
+            "dc:extent": 945,
             "tableSchema": {
                 "columns": [
                     {

@@ -5,87 +5,87 @@
 
 | Segment | Occurrence | BIPA | CLTS SoundClass |
 |:----------|-------------:|:-------|:------------------|
-| - | 13720 | ? | ? |
-| á | 5002 | ✓ | ✓ |
-| à | 4850 | ✓ | ✓ |
-| n | 3842 | ✓ | ✓ |
-| ɡ | 3835 | ✓ | ✓ |
-| r | 3716 | ✓ | ✓ |
-| d | 3554 | ✓ | ✓ |
-| ɛ́ | 3318 | ✓ | ✓ |
-| ú | 3213 | ✓ | ✓ |
-| í | 3135 | ✓ | ✓ |
-| ù | 3010 | ✓ | ✓ |
-| k | 2832 | ✓ | ✓ |
-| m | 2801 | ✓ | ✓ |
-| l | 2762 | ✓ | ✓ |
-| ì | 2718 | ✓ | ✓ |
-| ɛ̀ | 2454 | ✓ | ✓ |
-| ɔ́ | 2410 | ✓ | ✓ |
-| ó | 2340 | ✓ | ✓ |
-| j | 2237 | ✓ | ✓ |
-| t | 2212 | ✓ | ✓ |
-| s | 2156 | ✓ | ✓ |
-| ɔ̀ | 2093 | ✓ | ✓ |
-| é | 2002 | ✓ | ✓ |
-| b | 1899 | ✓ | ✓ |
-| è | 1896 | ✓ | ✓ |
-| ò | 1638 | ✓ | ✓ |
-| <<∼>> | 1546 | ? | ? |
-| w | 1531 | ✓ | ✓ |
-| ŋ | 1409 | ✓ | ✓ |
-| ʒ | 1305 | ✓ | ✓ |
-| p | 1236 | ✓ | ✓ |
-| nd | 865 | ✓ | ✓ |
-| mb | 603 | ✓ | ✓ |
-| dʒ | 506 | ✓ | ✓ |
-| ɲ | 445 | ✓ | ✓ |
-| ∼ | 315 | ✓ | ✓ |
-| z | 276 | ✓ | ✓ |
-| ʃ | 267 | ✓ | ✓ |
-| ǎ | 257 | ✓ | ✓ |
-| ʔ | 168 | ✓ | ✓ |
-| nj | 156 | ? | ? |
-| ɛ̌ | 151 | ✓ | ✓ |
-| â | 147 | ✓ | ✓ |
-| ɔ̌ | 112 | ✓ | ✓ |
-| î | 106 | ✓ | ✓ |
-| h | 100 | ✓ | ✓ |
-| ǒ | 95 | ✓ | ✓ |
-| ě | 82 | ✓ | ✓ |
-| ǔ | 75 | ✓ | ✓ |
-| ɣ | 73 | ✓ | ✓ |
-| ɛ | 70 | ✓ | ✓ |
-| ɛ̂ | 67 | ✓ | ✓ |
-| ɔ̂ | 63 | ✓ | ✓ |
+| + | 18321 | ✓ | ✓ |
+| n | 5785 | ✓ | ✓ |
+| á | 5436 | ✓ | ✓ |
+| à | 5190 | ✓ | ✓ |
+| d | 5077 | ✓ | ✓ |
+| ɡ | 4010 | ✓ | ✓ |
+| r | 4002 | ✓ | ✓ |
+| m | 3651 | ✓ | ✓ |
+| ɛ́ | 3576 | ✓ | ✓ |
+| ú | 3442 | ✓ | ✓ |
+| í | 3378 | ✓ | ✓ |
+| ù | 3185 | ✓ | ✓ |
+| k | 3033 | ✓ | ✓ |
+| l | 2986 | ✓ | ✓ |
+| ì | 2891 | ✓ | ✓ |
+| b | 2699 | ✓ | ✓ |
+| ɛ̀ | 2637 | ✓ | ✓ |
+| ɔ́ | 2570 | ✓ | ✓ |
+| ó | 2486 | ✓ | ✓ |
+| j | 2427 | ✓ | ✓ |
+| t | 2351 | ✓ | ✓ |
+| s | 2346 | ✓ | ✓ |
+| ɔ̀ | 2259 | ✓ | ✓ |
+| é | 2150 | ✓ | ✓ |
+| è | 1987 | ✓ | ✓ |
+| ò | 1733 | ✓ | ✓ |
+| ʒ | 1714 | ✓ | ✓ |
+| w | 1644 | ✓ | ✓ |
+| ŋ | 1505 | ✓ | ✓ |
+| p | 1316 | ✓ | ✓ |
+| ∼ | 992 | ✓ | ✓ |
+| ɲ | 476 | ✓ | ✓ |
+| z | 288 | ✓ | ✓ |
+| ʃ | 279 | ✓ | ✓ |
+| ǎ | 273 | ✓ | ✓ |
+| ʔ | 173 | ✓ | ✓ |
+| â | 162 | ✓ | ✓ |
+| ɛ̌ | 155 | ✓ | ✓ |
+| ɔ̌ | 118 | ✓ | ✓ |
+| î | 112 | ✓ | ✓ |
+| h | 110 | ✓ | ✓ |
+| ǒ | 104 | ✓ | ✓ |
+| ě | 84 | ✓ | ✓ |
+| ɣ | 82 | ✓ | ✓ |
+| ǔ | 79 | ✓ | ✓ |
+| ɛ̂ | 75 | ✓ | ✓ |
+| ɔ̂ | 67 | ✓ | ✓ |
+| ô | 48 | ✓ | ✓ |
+| û | 47 | ✓ | ✓ |
+| ǐ | 45 | ✓ | ✓ |
 | q | 42 | ✓ | ✓ |
-| ô | 42 | ✓ | ✓ |
-| û | 42 | ✓ | ✓ |
-| ǐ | 42 | ✓ | ✓ |
-| f | 35 | ✓ | ✓ |
-| ɔ | 35 | ✓ | ✓ |
-| <<́>> | 32 | ? | ? |
-| ê | 24 | ✓ | ✓ |
-| i | 19 | ✓ | ✓ |
-| ə̀ | 16 | ✓ | ✓ |
-| a | 15 | ✓ | ✓ |
+| f | 41 | ✓ | ✓ |
+| ɛ | 39 | ✓ | ✓ |
+| ê | 26 | ✓ | ✓ |
+| i | 18 | ✓ | ✓ |
+| ə̀ | 18 | ✓ | ✓ |
+| a | 14 | ✓ | ✓ |
+| <<́>> | 13 | ? | ? |
+| e | 9 | ✓ | ✓ |
+| ɔ | 9 | ✓ | ✓ |
+| ḿ | 8 | ? | ? |
 | ə́ | 7 | ✓ | ✓ |
-| ḿ | 7 | ? | ? |
-| e | 6 | ✓ | ✓ |
+| o | 6 | ✓ | ✓ |
 | x | 6 | ✓ | ✓ |
 | š | 6 | ? | ? |
-| o | 4 | ✓ | ✓ |
+| v | 4 | ✓ | ✓ |
+| ~ | 4 | ? | ? |
+| ǽ | 4 | ✓ | ✓ |
+| ɓ | 4 | ✓ | ✓ |
+| tʃ | 3 | ✓ | ✓ |
 | u | 3 | ✓ | ✓ |
-| v | 3 | ✓ | ✓ |
-| ǽ | 3 | ✓ | ✓ |
-| ɓ | 3 | ✓ | ✓ |
+| ɗ | 3 | ✓ | ✓ |
+| <<'>> | 2 | ? | ? |
 | <<̌>> | 2 | ? | ? |
 | j̀ | 2 | ? | ? |
-| tʃ | 2 | ✓ | ✓ |
-| ~ | 2 | ? | ? |
-| ɗ | 2 | ✓ | ✓ |
 | ʄ | 2 | ✓ | ✓ |
 | ẁ | 2 | ? | ? |
+| ẃ | 2 | ? | ? |
+| j~ | 1 | ? | ? |
+| m̀ᵇ | 1 | ? | ? |
+| ᵇ | 1 | ? | ? |
 | ḱ | 1 | ? | ? |
 
 (82 rows)
@@ -104,108 +104,77 @@
 ## Words with invalid segments (up to 100 only)
 
 | ID | LANGUAGE | CONCEPT | FORM | SEGMENTS |
-|:---------------------------------------------------|:--------------------|:--------------------------------|:------------------|:-------------------------------------------------------------|
-| BankanTey-2762_calf-1 | BankanTey | 2762_calf | nà.à_yî-m | n à à <s> - </s> j î <s> - </s> m |
-| BankanTey-2771_camel-1 | BankanTey | 2771_camel | ɔ̀.ɔ̀_ɲɛ̂.∼-m | ɔ̀ ɔ̀ <s> - </s> ɲ ɛ̂ <s> <<∼>> </s> <s> - </s> m |
-| BankanTey-2822_cat-1 | BankanTey | 2822_cat | nùmǎ-m | n ù m ǎ <s> - </s> m |
-| BankanTey-3595_dog-1 | BankanTey | 3595_dog | ǹdʒèrû-m | n d ʒ è r û <s> - </s> m |
-| BankanTey-3599_domesticanimalesplivestock-1 | BankanTey | 3599_domesticanimalesplivestock | dá.ábà-m | d á á b à <s> - </s> m |
-| BenTey-2696_bull-1 | BenTey | 2696_bull | nà.à_ár.∼à-m | n à à <s> - </s> á r <s> <<∼>> </s> à <s> - </s> m |
-| BenTey-2762_calf-1 | BenTey | 2762_calf | nà.à_yǐ-m | n à à <s> - </s> j ǐ <s> - </s> m |
-| BenTey-2771_camel-1 | BenTey | 2771_camel | ɔ̀.ɔ̀_ɲùw.∼ɔ̂-m | ɔ̀ ɔ̀ <s> - </s> ɲ ù w <s> <<∼>> </s> ɔ̂ <s> - </s> m |
-| BenTey-2822_cat-1 | BenTey | 2822_cat | nìnì-w.∼ɛ̌-m | n ì n ì <s> - </s> w <s> <<∼>> </s> ɛ̌ <s> - </s> m |
-| BenTey-3227_cowfemale-1 | BenTey | 3227_cowfemale | nà.à_yǎ-m | n à à <s> - </s> j ǎ <s> - </s> m |
-| BenTey-3595_dog-1 | BenTey | 3595_dog | ìnjɛ̌-m | ì <s> nj </s> ɛ̌ <s> - </s> m |
-| BenTey-3599_domesticanimalesplivestock-1 | BenTey | 3599_domesticanimalesplivestock | àrsɛ̀.ɛ́-m | à r s ɛ̀ ɛ́ <s> - </s> m |
-| Bunoge-2762_calf-1 | Bunoge | 2762_calf | ná.á_bè | n á á <s> - </s> b è |
-| Bunoge-2771_camel-1 | Bunoge | 2771_camel | ɲɔ́ŋɔ́-mɛ̀ | ɲ ɔ́ ŋ ɔ́ <s> - </s> m ɛ̀ |
-| Bunoge-3595_dog-1 | Bunoge | 3595_dog | ʔín-jɛ̀ | ʔ í n <s> - </s> dʒ ɛ̀ |
-| Bunoge-3599_domesticanimalesplivestock-1 | Bunoge | 3599_domesticanimalesplivestock | kɔ́-mbɔ̀ | k ɔ́ <s> - </s> mb ɔ̀ |
-| DogulDomBendiely-2696_bull-1 | DogulDomBendiely | 2696_bull | nààɡù_ánà | n à à ɡ ù <s> - </s> á n à |
-| DogulDomBendiely-2762_calf-1 | DogulDomBendiely | 2762_calf | nààɡù_éɡù | n à à ɡ ù <s> - </s> é ɡ ù |
-| DogulDomBendiely-2771_camel-1 | DogulDomBendiely | 2771_camel | yɔ́ŋù-mɛ̀ | j ɔ́ ŋ ù <s> - </s> m ɛ̀ |
-| DogulDomBendiely-3599_domesticanimalesplivestock-1 | DogulDomBendiely | 3599_domesticanimalesplivestock | bɛ́lɛ̀-ɡù | b ɛ́ l ɛ̀ <s> - </s> ɡ ù |
-| DogulDomKundialang-2771_camel-1 | DogulDomKundialang | 2771_camel | yɔ́ŋ-mɛ̀ | j ɔ́ ŋ <s> - </s> m ɛ̀ |
-| DonnoSo-2696_bull-1 | DonnoSo | 2696_bull | nàŋà_àná | n à ŋ à <s> - </s> à n á |
-| DonnoSo-2762_calf-1 | DonnoSo | 2762_calf | nàŋà_í.ì | n à ŋ à <s> - </s> í ì |
-| DonnoSo-2771_camel-1 | DonnoSo | 2771_camel | ɔ̀ŋɔ̀_yòŋó | ɔ̀ ŋ ɔ̀ <s> - </s> j ò ŋ ó |
-| DonnoSo-2822_cat-1 | DonnoSo | 2822_cat | ɡám-mà | ɡ á m <s> - </s> m à |
-| Gourou-2771_camel-1 | Gourou | 2771_camel | ɔ̀ɣɔ̀_j.∼ùw.∼ó | ɔ̀ ɣ ɔ̀ <s> - </s> dʒ <s> <<∼>> </s> ù w <s> <<∼>> </s> ó |
-| Gourou-2822_cat-1 | Gourou | 2822_cat | nì_nìw.∼é | n ì <s> - </s> n ì w <s> <<∼>> </s> é |
-| Gourou-3599_domesticanimalesplivestock-1 | Gourou | 3599_domesticanimalesplivestock | ɡàr_sɛ̀ɡɛ́ | ɡ à r <s> - </s> s ɛ̀ ɡ ɛ́ |
-| JamsayDouentza-2696_bull-1 | JamsayDouentza | 2696_bull | nàŋà_àr.∼á | n à ŋ à <s> - </s> à r <s> <<∼>> </s> á |
-| JamsayDouentza-2762_calf-1 | JamsayDouentza | 2762_calf | nàŋ_í.ì-ⁿ | n à ŋ <s> - </s> í ì |
-| JamsayDouentza-2771_camel-1 | JamsayDouentza | 2771_camel | ɔ̀ɣɔ̀_ɲùŋó | ɔ̀ ɣ ɔ̀ <s> - </s> ɲ ù ŋ ó |
-| JamsayDouentza-2822_cat-1 | JamsayDouentza | 2822_cat | nì_nìw.∼é | n ì <s> - </s> n ì w <s> <<∼>> </s> é |
-| JamsayDouentza-3227_cowfemale-1 | JamsayDouentza | 3227_cowfemale | nàŋà_ná.á | n à ŋ à <s> - </s> n á á |
-| JamsayDouentza-3599_domesticanimalesplivestock-1 | JamsayDouentza | 3599_domesticanimalesplivestock | ɡà_sɛ̀ɡɛ́ | ɡ à <s> - </s> s ɛ̀ ɡ ɛ́ |
-| JamsayMondoro-3599_domesticanimalesplivestock-1 | JamsayMondoro | 3599_domesticanimalesplivestock | à_sɛ̀ɡɛ | à <s> - </s> s ɛ̀ ɡ ɛ |
-| Mombo-2696_bull-1 | Mombo | 2696_bull | nà.à_wálá | n à à <s> - </s> w á l á |
-| Mombo-2762_calf-1 | Mombo | 2762_calf | nà.à_wé.é | n à à <s> - </s> w é é |
-| Mombo-2771_camel-1 | Mombo | 2771_camel | ɲɔ̀ŋɔ̀-mɛ́ | ɲ ɔ̀ ŋ ɔ̀ <s> - </s> m ɛ́ |
-| Mombo-2822_cat-1 | Mombo | 2822_cat | ɡà.àw.∼ě | ɡ à à w <s> <<∼>> </s> ě |
-| Mombo-3227_cowfemale-1 | Mombo | 3227_cowfemale | ná.á_yɔ̀.ɔ̀ | n á á <s> - </s> j ɔ̀ ɔ̀ |
-| Mombo-3595_dog-1 | Mombo | 3595_dog | ínjɛ̀ | í <s> nj </s> ɛ̀ |
-| Mombo-3599_domesticanimalesplivestock-1 | Mombo | 3599_domesticanimalesplivestock | dèbù_bɛ́lí | d è b ù <s> - </s> b ɛ́ l í |
-| Najamba-2696_bull-1 | Najamba | 2696_bull | nɛ̀.ɛ̀_ánè | n ɛ̀ ɛ̀ <s> - </s> á n è |
-| Najamba-2762_calf-1 | Najamba | 2762_calf | nà.à-mbí.ì | n à à <s> - </s> mb í ì |
-| Najamba-2771_camel-1 | Najamba | 2771_camel | ɲɔ̀ŋɔ̀-mɛ́ | ɲ ɔ̀ ŋ ɔ̀ <s> - </s> m ɛ́ |
-| Najamba-3227_cowfemale-1 | Najamba | 3227_cowfemale | nɛ̀.ɛ̀_yɛ̀.ɛ́ | n ɛ̀ ɛ̀ <s> - </s> j ɛ̀ ɛ́ |
-| Najamba-3595_dog-1 | Najamba | 3595_dog | ŋɡ-wɛ̀.ɛ́ | ŋ ɡ <s> - </s> w ɛ̀ ɛ́ |
-| Najamba-3599_domesticanimalesplivestock-1 | Najamba | 3599_domesticanimalesplivestock | dúmɛ́-ŋɡó | d ú m ɛ́ <s> - </s> ŋ ɡ ó |
-| Nanga-2696_bull-1 | Nanga | 2696_bull | nàŋà_ár.∼â | n à ŋ à <s> - </s> á r <s> <<∼>> </s> â |
-| Nanga-2762_calf-1 | Nanga | 2762_calf | nàŋà_yí.ì | n à ŋ à <s> - </s> j í ì |
-| Nanga-2771_camel-1 | Nanga | 2771_camel | ɔ̀ɡɔ̀_ɲɔ̀ŋɔ̂ | ɔ̀ ɡ ɔ̀ <s> - </s> ɲ ɔ̀ ŋ ɔ̂ |
-| Nanga-2822_cat-1 | Nanga | 2822_cat | dò-ndí-yê | d ò <s> - </s> nd í <s> - </s> j ê |
-| Nanga-3227_cowfemale-1 | Nanga | 3227_cowfemale | nàŋà_yà.á | n à ŋ à <s> - </s> j à á |
-| Nanga-3595_dog-1 | Nanga | 3595_dog | nɛ̀r.∼î | n ɛ̀ r <s> <<∼>> </s> î |
-| Nanga-3599_domesticanimalesplivestock-1 | Nanga | 3599_domesticanimalesplivestock | ɡà_sɛ̀ɡɛ́ | ɡ à <s> - </s> s ɛ̀ ɡ ɛ́ |
-| Penange-2762_calf-1 | Penange | 2762_calf | nà.à_wé.è | n à à <s> - </s> w é è |
-| Penange-2771_camel-1 | Penange | 2771_camel | ɲɔ́.ɔ́_mɔ̀j.∼ | ɲ ɔ́ ɔ́ <s> - </s> m ɔ̀ dʒ <s> <<∼>> </s> |
-| Penange-2822_cat-1 | Penange | 2822_cat | ɡà-àⁿ | ɡ à <s> - </s> à ∼ |
-| PergeTegu-2762_calf-1 | PergeTegu | 2762_calf | nàŋ_í.ì-ⁿ | n à ŋ <s> - </s> í ì |
-| PergeTegu-2771_camel-1 | PergeTegu | 2771_camel | ɔ̀ɡɔ̀_ɲùw.∼ó | ɔ̀ ɡ ɔ̀ <s> - </s> ɲ ù w <s> <<∼>> </s> ó |
-| PergeTegu-2822_cat-1 | PergeTegu | 2822_cat | nì_nìw.∼é | n ì <s> - </s> n ì w <s> <<∼>> </s> é |
+|:-------------------------------------------------------------------|:--------------------|:--------------------------------------------------|:----------------------------------------|:----------------------------------------------------------------------------------------------------------|
+| BankanTey-4239_forget-1 | BankanTey | 4239_forget | ìrɛ-́írɛ́ | ì r ɛ + <s> <<́>> </s> í r ɛ́ |
+| BankanTey-5327_knot-1 | BankanTey | 5327_knot | mɔ̀-ɔ́ỳⁿ | m ɔ̀ + ɔ́ <s> j̀ </s> ∼ |
+| BankanTey-6361_no-1 | BankanTey | 6361_no | ḿʔm | <s> ḿ </s> ʔ m |
+| BenTey-2678_buildhouse-1 | BenTey | 2678_buildhouse | tʃɛ-́w.nɛ́ | t ʃ ɛ + <s> <<́>> </s> w ∼ ɛ́ |
+| BenTey-402_egmetallicsurfaceshinebeshiny-1 | BenTey | 402_egmetallicsurfaceshinebeshiny | tʃɛ-́r-.-níí | t ʃ ɛ + <s> <<́>> </s> r + + n í í |
+| BenTey-9326_wantlikelovesth-3 | BenTey | 9326_wantlikelovesth | mᵇá.áy-í | m <s> ᵇ </s> á á j + í |
+| DogulDomBendiely-2999_clawtalon-1 | DogulDomBendiely | 2999_clawtalon | ḱòbùlú-ŋ | <s> ḱ </s> ò b ù l ú + ŋ |
+| DogulDomBendiely-4999_house-1 | DogulDomBendiely | 4999_house | ḿbùŋ | <s> ḿ </s> b ù ŋ |
+| DogulDomKundialang-5011_householdfamilysetofpeoplewhoeattogether-1 | DogulDomKundialang | 5011_householdfamilysetofpeoplewhoeattogether | ḿbùŋ | <s> ḿ </s> b ù ŋ |
+| DonnoSo-1363_watersplashsprayegatawaterfall-1 | DonnoSo | 1363_watersplashsprayegatawaterfall | pín--jè.è | p í n + + d ʒ è è |
+| DonnoSo-3933_extinguishputoutfire-1 | DonnoSo | 3933_extinguishputoutfire | ɲǎŋ--dà.á | ɲ ǎ ŋ + + d à á |
+| DonnoSo-4003_fastrapidlyquickly-1 | DonnoSo | 4003_fastrapidlyquickly | númɔ̀ẁ | n ú m ɔ̀ <s> ẁ </s> |
+| DonnoSo-5627_listentosthsb-1 | DonnoSo | 5627_listentosthsb | kéɲ--ɲè.è | k é ɲ + + ɲ è è |
+| DonnoSo-712_manmarrywoman-1 | DonnoSo | 712_manmarrywoman | dʒ-ɛ-́ɛ̀ | d ʒ + ɛ + <s> <<́>> </s> ɛ̀ |
+| DonnoSo-919_riflefiredischargegooff-1 | DonnoSo | 919_riflefiredischargegooff | táy--yɛ̀.ɛ̀ | t á j + + j ɛ̀ ɛ̀ |
+| Gourou-4223_foot-1 | Gourou | 4223_foot | kúẃ.-n | k ú <s> ẃ </s> + n |
+| Gourou-5530_leg-1 | Gourou | 5530_leg | kúẃ.-n_xxx | k ú <s> ẃ </s> + n + x x x |
+| Gourou-9296_vomiremitvomit-1 | Gourou | 9296_vomiremitvomit | tɔ̌y--tɔ́.ɔ́ | t ɔ̌ j + + t ɔ́ ɔ́ |
+| JamsayDouentza-9296_vomiremitvomit-1 | JamsayDouentza | 9296_vomiremitvomit | tɔ̌y--tɔ́.ɔ́ | t ɔ̌ j + + t ɔ́ ɔ́ |
+| JamsayMondoro-9296_vomiremitvomit-1 | JamsayMondoro | 9296_vomiremitvomit | tɔ̌y--tɔ́.ɔ́ | t ɔ̌ j + + t ɔ́ ɔ́ |
+| Mombo-1258_sthevolvechangefromwhatitwasbefore-1 | Mombo | 1258_sthevolvechangefromwhatitwasbefore | nél--yé.è | n é l + + j é è |
+| Mombo-1268_sthturnspinrotate-1 | Mombo | 1268_sthturnspinrotate | wíl--yé.è | w í l + + j é è |
+| Mombo-1363_watersplashsprayegatawaterfall-1 | Mombo | 1363_watersplashsprayegatawaterfall | píl--yé.è | p í l + + j é è |
+| Mombo-1969_approachcomeclose-1 | Mombo | 1969_approachcomeclose | dín--yɛ́.ɛ̀ | d í n + + j ɛ́ ɛ̀ |
+| Mombo-1999_arriveatreach-1 | Mombo | 1999_arriveatreach | dín--yɛ́.ɛ̀ | d í n + + j ɛ́ ɛ̀ |
+| Mombo-2788_carrybagriflebyslingingstrapoveronesshoulder-1 | Mombo | 2788_carrybagriflebyslingingstrapoveronesshoulder | pád--yé.è | p á d + + j é è |
+| Mombo-3085_comenearapproachhere-1 | Mombo | 3085_comenearapproachhere | dín--yɛ́.ɛ̀ | d í n + + j ɛ́ ɛ̀ |
+| Mombo-322_egbirdfly-1 | Mombo | 322_egbirdfly | píl--yé.è | p í l + + j é è |
+| Mombo-4104_findrecoversthlost-1 | Mombo | 4104_findrecoversthlost | mál--yé.è | m á l + + j é è |
+| Mombo-4104_findrecoversthlost-2 | Mombo | 4104_findrecoversthlost | mál--yé.è | m á l + + j é è |
+| Mombo-4348_gatherthings-1 | Mombo | 4348_gatherthings | ky-a-́.á-ɡè | k j + a + <s> <<́>> </s> á + ɡ è |
+| Mombo-5681_lookat-1 | Mombo | 5681_lookat | mál--yé.è | m á l + + j é è |
+| Mombo-7566_see-1 | Mombo | 7566_see | mál--yé.è | m á l + + j é è |
+| Mombo-8473_strolltakeawalkverbonly-1 | Mombo | 8473_strolltakeawalkverbonly | ɡíl--yé.è | ɡ í l + + j é è |
+| Mombo-8913_touchwithhand-1 | Mombo | 8913_touchwithhand | táb--yé.è | t á b + + j é è |
+| Nanga-1121_sbsweatperspire-1 | Nanga | 1121_sbsweatperspire | sǒy--ɡò.ó | s ǒ j + + ɡ ò ó |
+| Nanga-2268_besilentbequiet-2 | Nanga | 2268_besilentbequiet | kéw--bè.é | k é w + + b è é |
+| Nanga-8935_trap-1 | Nanga | 8935_trap | děẁ | d ě <s> ẁ </s> |
+| Penange-7008_putsthinaplace-1 | Penange | 7008_putsthinaplace | nw-a-́.á-mì | n w + a + <s> <<́>> </s> á + m ì |
+| PergeTegu-2999_clawtalon-1 | PergeTegu | 2999_clawtalon | kùwɔ̀ší-ⁿ | k ù w ɔ̀ <s> š </s> í |
 | PergeTegu-3595_dog-1 | PergeTegu | 3595_dog | ìšú | ì <s> š </s> ú |
-| PergeTegu-3599_domesticanimalesplivestock-1 | PergeTegu | 3599_domesticanimalesplivestock | à_sɛ̀ɡɛ́ | à <s> - </s> s ɛ̀ ɡ ɛ́ |
-| TebulUre-2696_bull-1 | TebulUre | 2696_bull | nà.à_ár.∼á | n à à <s> - </s> á r <s> <<∼>> </s> á |
-| TebulUre-2762_calf-1 | TebulUre | 2762_calf | nà.à_ɛ̀dɛ́ | n à à <s> - </s> ɛ̀ d ɛ́ |
-| TebulUre-2771_camel-1 | TebulUre | 2771_camel | ɔ̀ɡɔ̀_ɲɔ̀ŋɔ́ | ɔ̀ ɡ ɔ̀ <s> - </s> ɲ ɔ̀ ŋ ɔ́ |
-| TebulUre-2822_cat-1 | TebulUre | 2822_cat | bàl-má | b à l <s> - </s> m á |
-| TebulUre-3599_domesticanimalesplivestock-1 | TebulUre | 3599_domesticanimalesplivestock | ɡà_sɛ̀ɡɛ́ | ɡ à <s> - </s> s ɛ̀ ɡ ɛ́ |
-| Tiranige-2771_camel-1 | Tiranige | 2771_camel | njè-lèbà | <s> nj </s> è <s> - </s> l è b à |
-| TogoKan-2696_bull-1 | TogoKan | 2696_bull | nàŋà_àr.∼á | n à ŋ à <s> - </s> à r <s> <<∼>> </s> á |
-| TogoKan-2762_calf-1 | TogoKan | 2762_calf | nàŋ_í.í-ⁿ | n à ŋ <s> - </s> í í |
-| TogoKan-2771_camel-1 | TogoKan | 2771_camel | ɔ̀ɡɔ̀_ɲɔ̌ | ɔ̀ ɡ ɔ̀ <s> - </s> ɲ ɔ̌ |
-| TogoKan-3227_cowfemale-1 | TogoKan | 3227_cowfemale | nàŋà_ná.á | n à ŋ à <s> - </s> n á á |
-| TogoKan-3599_domesticanimalesplivestock-1 | TogoKan | 3599_domesticanimalesplivestock | ɡìr.∼í_árúsɛ̀-ɡɛ̀ | ɡ ì r <s> <<∼>> </s> í <s> - </s> á r ú s ɛ̀ <s> - </s> ɡ ɛ̀ |
-| TommoSoTongoTongo-2696_bull-1 | TommoSoTongoTongo | 2696_bull | nàà_àná | n à à <s> - </s> à n á |
-| TommoSoTongoTongo-2762_calf-1 | TommoSoTongoTongo | 2762_calf | nàà_íí | n à à <s> - </s> í í |
-| TommoSoTongoTongo-2771_camel-1 | TommoSoTongoTongo | 2771_camel | ɲòŋó-m | ɲ ò ŋ ó <s> - </s> m |
-| TommoSoTongoTongo-2822_cat-1 | TommoSoTongoTongo | 2822_cat | ɡám-má | ɡ á m <s> - </s> m á |
-| TommoSoTongoTongo-3227_cowfemale-1 | TommoSoTongoTongo | 3227_cowfemale | nàà_yàá | n à à <s> - </s> j à á |
-| TomoKanDiangassagou-2762_calf-1 | TomoKanDiangassagou | 2762_calf | nàŋà_dò-mbè | n à ŋ à <s> - </s> d ò <s> - </s> mb è |
-| TomoKanDiangassagou-2771_camel-1 | TomoKanDiangassagou | 2771_camel | ɲɔ̀ŋɛ̀-mɛ́ | ɲ ɔ̀ ŋ ɛ̀ <s> - </s> m ɛ́ |
-| TomoKanDiangassagou-2822_cat-1 | TomoKanDiangassagou | 2822_cat | dò-ndò | d ò <s> - </s> nd ò |
-| TomoKanSegue-2771_camel-1 | TomoKanSegue | 2771_camel | ɲɔ̀ʔɔ̀-mɛ́ | ɲ ɔ̀ ʔ ɔ̀ <s> - </s> m ɛ́ |
-| TomoKanSegue-2822_cat-1 | TomoKanSegue | 2822_cat | dó-ndó | d ó <s> - </s> nd ó |
-| ToroTegu-2696_bull-1 | ToroTegu | 2696_bull | nàŋà_àrá | n à ŋ à <s> - </s> à r á |
-| ToroTegu-2762_calf-1 | ToroTegu | 2762_calf | nàŋàì-r.∼í.í | n à ŋ à ì <s> - </s> r <s> <<∼>> </s> í í |
-| ToroTegu-2822_cat-1 | ToroTegu | 2822_cat | nìw.∼á | n ì w <s> <<∼>> </s> á |
-| ToroTegu-3227_cowfemale-1 | ToroTegu | 3227_cowfemale | nàŋà-yá | n à ŋ à <s> - </s> j á |
-| ToroTegu-3599_domesticanimalesplivestock-1 | ToroTegu | 3599_domesticanimalesplivestock | àrùzà-ká | à r ù z à <s> - </s> k á |
-| YandaDom-2762_calf-1 | YandaDom | 2762_calf | nǎ_yyè | n ǎ <s> - </s> j j è |
-| YandaDom-2771_camel-1 | YandaDom | 2771_camel | ɔ̀ɡɔ̀_ɲɔ̀ŋɔ̀ | ɔ̀ ɡ ɔ̀ <s> - </s> ɲ ɔ̀ ŋ ɔ̀ |
-| YandaDom-2822_cat-1 | YandaDom | 2822_cat | ɡà-àⁿ | ɡ à <s> - </s> à ∼ |
-| YandaDom-3227_cowfemale-1 | YandaDom | 3227_cowfemale | nà.à_yɛ̀ | n à à <s> - </s> j ɛ̀ |
-| YandaDom-3599_domesticanimalesplivestock-1 | YandaDom | 3599_domesticanimalesplivestock | à_sɛ̀ɡɛ̀ | à <s> - </s> s ɛ̀ ɡ ɛ̀ |
-| YornoSo-2696_bull-1 | YornoSo | 2696_bull | nà.à_àr.∼á | n à à <s> - </s> à r <s> <<∼>> </s> á |
-| YornoSo-2762_calf-1 | YornoSo | 2762_calf | nà-à_í-ì | n à <s> - </s> à <s> - </s> í <s> - </s> ì |
-| YornoSo-2771_camel-1 | YornoSo | 2771_camel | ɔ̀ɡɔ̀_yɔ̀.ɔ́.∼ | ɔ̀ ɡ ɔ̀ <s> - </s> j ɔ̀ ɔ́ <s> <<∼>> </s> |
-| YornoSo-2822_cat-1 | YornoSo | 2822_cat | ɡá-mà | ɡ á <s> - </s> m à |
-| YornoSo-3227_cowfemale-1 | YornoSo | 3227_cowfemale | nà.à_yà.á | n à à <s> - </s> j à á |
-| YornoSo-3599_domesticanimalesplivestock-1 | YornoSo | 3599_domesticanimalesplivestock | àrù_sɛ̀ɡɛ́ | à r ù <s> - </s> s ɛ̀ ɡ ɛ́ |
+| PergeTegu-402_egmetallicsurfaceshinebeshiny-1 | PergeTegu | 402_egmetallicsurfaceshinebeshiny | kár-.-níɛ́ | k á r + + n í ɛ́ |
+| PergeTegu-4115_finger-1 | PergeTegu | 4115_finger | nùw.-nòší.ì-ⁿ | n ù w + n ò <s> š </s> í ì |
+| PergeTegu-4116_fingernail-1 | PergeTegu | 4116_fingernail | nùw.-nòšì.ìⁿ_kóm-dʒ-ó | n ù w + n ò <s> š </s> ì ì ∼ + k ó m + d ʒ + ó |
+| PergeTegu-7292_ringonfinger-1 | PergeTegu | 7292_ringonfinger | nùw.-nòšì.ìⁿí.ínɛ́-m | n ù w + n ò <s> š </s> ì ì ∼ í í n ɛ́ + m |
+| PergeTegu-8819_thumb-1 | PergeTegu | 8819_thumb | nùw.-nòsⁿì.ìⁿ_àr.ná | n ù w + n ò s <s> ~ </s> ì ì ∼ + à r ∼ á |
+| PergeTegu-8875_toe-1 | PergeTegu | 8875_toe | kùwɔ̀ší.ì-ⁿ | k ù w ɔ̀ <s> š </s> í ì |
+| TebulUre-8_1plsubjectpronominal-1 | TebulUre | 8_1plsubjectpronominal | yⁿ | <s> j~ </s> |
+| TebulUre-9443_which-1 | TebulUre | 9443_which | àḿ | à <s> ḿ </s> |
+| TebulUre-9468_who-1 | TebulUre | 9468_who | àḿ | à <s> ḿ </s> |
+| TogoKan-2012_askaquestionofsb-1 | TogoKan | 2012_askaquestionofsb | úɲɔ-́r-.-nɔ́ | ú ɲ ɔ + <s> <<́>> </s> r + + n ɔ́ |
+| TogoKan-2552_boy-1 | TogoKan | 2552_boy | àr-náỳⁿ | à r + n á <s> j̀ </s> ∼ |
+| TogoKan-3435_defecateverbonly-1 | TogoKan | 3435_defecateverbonly | bɛ̌:_[for_bɛ̌:sɛ̂ⁿ_see_also_bě:_'put'] | b ɛ̀ ɛ́ + f o r + b ɛ̀ ɛ́ s ɛ̂ <s> ~ </s> + s e e + a l s o + b è é + <s> <<'>> </s> p u t <s> <<'>> </s> |
+| TommoSoTongoTongo-4277_friendcasual-1 | TommoSoTongoTongo | 4277_friendcasual | ḿbɔ́ | <s> ḿ </s> b ɔ́ |
+| TommoSoTongoTongo-7617_sewwithneedle-1 | TommoSoTongoTongo | 7617_sewwithneedle | nɔ̌y--nɔ́.ɔ́ | n ɔ̌ j + + n ɔ́ ɔ́ |
+| TommoSoTongoTongo-9326_wantlikelovesth-2 | TommoSoTongoTongo | 9326_wantlikelovesth | ḿbíy-ɛ́ | <s> ḿ </s> b í j + ɛ́ |
+| TomoKanDiangassagou-2965_chokeononesfood-1 | TomoKanDiangassagou | 2965_chokeononesfood | pyɛ-́ŋɡ-í | p j ɛ + <s> <<́>> </s> ŋ ɡ + í |
+| TomoKanDiangassagou-8280_squat-1 | TomoKanDiangassagou | 8280_squat | twɛ-́lí | t w ɛ + <s> <<́>> </s> l í |
+| TomoKanSegue-5566_liedowngotobed-1 | TomoKanSegue | 5566_liedowngotobed | myɛ-́.n | m j ɛ + <s> <<́>> </s> n |
+| TomoKanSegue-6088_misstargetegwithashot-1 | TomoKanSegue | 6088_misstargetegwithashot | byɛ-́làw.n | b j ɛ + <s> <<́>> </s> l à w ∼ |
+| ToroTegu-14_1sgindependentpronoun-2 | ToroTegu | 14_1sgindependentpronoun | m̀ᵇí | <s> m̀ᵇ </s> í |
+| ToroTegu-5017_hugholdsbinabearhuginwrestling-1 | ToroTegu | 5017_hugholdsbinabearhuginwrestling | tʃɛ-́w.ná | t ʃ ɛ + <s> <<́>> </s> w ∼ á |
+| ToroTegu-6727_pinchegapimpletoexpelthepus-1 | ToroTegu | 6727_pinchegapimpletoexpelthepus | tʃɛ-́w.ná | t ʃ ɛ + <s> <<́>> </s> w ∼ á |
+| YandaDom-3610_doorwaypassage-1 | YandaDom | 3610_doorwaypassage | ḿbòl | <s> ḿ </s> b ò l |
+| YornoSo-2496_bluntnotsharpblade-1 | YornoSo | 2496_bluntnotsharpblade | dùmɲì-jⁿ | d ù m ɲ ì + d ʒ <s> ~ </s> |
+| YornoSo-251_childbeborn-1 | YornoSo | 251_childbeborn | nàr-.-nɛ́.ɛ́ | n à r + + n ɛ́ ɛ́ |
+| YornoSo-3655_drivevehicle-1 | YornoSo | 3655_drivevehicle | dʒɔ-̌mn-ɔ́ | d ʒ ɔ + <s> <<̌>> </s> m n + ɔ́ |
+| YornoSo-7278_ridedonkeyhorsecamel-1 | YornoSo | 7278_ridedonkeyhorsecamel | dʒɔ-̌mn-ɔ́ | d ʒ ɔ + <s> <<̌>> </s> m n + ɔ́ |
+| YornoSo-7713_short-1 | YornoSo | 7713_short | dùmì-jⁿ | d ù m ì + d ʒ <s> ~ </s> |
 
-(100 rows)
+(69 rows)
 
 

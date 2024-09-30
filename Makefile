@@ -1,6 +1,12 @@
-.PHONY: all ungrouped coverage cognates
+.PHONY: all prepare install run ungrouped coverage cognates illustrations statistics
 
-all: ungrouped coverage cognates
+all: prepare install run ungrouped coverage cognates illustrations statistics
+prepare:
+	python prepare_manual_data.py
+install:
+	pip install -e .
+run:
+	cldfbench lexibank.makecldf --glottolog="C:/Users/Promise Dodzi Kpoglu/glottolog" --concepticon="C:/Users/Promise Dodzi Kpoglu/concepticon-data" --clts="C:/Users/Promise Dodzi Kpoglu/clts" --glottolog-version=v5.0 --concepticon-version=v3.2.0 --clts-version=v2.3.0 heathdogon
 
 ungrouped:
 	edictor wordlist --dataset="cldf/cldf-metadata.json" \
@@ -12,6 +18,10 @@ coverage:
 
 cognates:
 	python distance.py
+illustrations:
+	python get_illustrations.py
+statistics:
+	python get_statistics.py
 
 
 
