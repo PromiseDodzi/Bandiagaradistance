@@ -1,44 +1,44 @@
-# CLDF dataset derived from Heath et al's "Dogon Comparative Wordlist" from 2016
+#Bandiagaradistance
+This repository accompanies the paper `On linguistic and geographic distances in the Bandiagara` by Promise Dodzi Kpoglu. The repository contains both the data and source code used in the paper's experiments.
 
-## How to cite
+# Data
+Data for this paper is derived from Heath et al's "Dogon Comparative Wordlist" from 2016.  
+The orginal data curated in CLDF (Cross Linguistic Data Format) is publicly available at the following link: https://github.com/languageorphans/heathdogon.
+However, the original data is not morphologically segmented.
+The current paper first segments the data after reading the various grammars available on the Dogon languages.  
+All files relating to further processing of data are done in manual_data_files
 
-If you use these data please cite
-- the original source
-  > Moran, Steven & Forkel, Robert & Heath, Jeffrey (eds.) 2016. Dogon and Bangime Linguistics. Jena: Max Planck Institute for the Science of Human History. (Available online at http://dogonlanguages.org, Accessed on 2023-08-10.)
-- the derived dataset using the DOI of the [particular released version](../../releases/) you were using
-
-## Description
-
-
-## Statistics
+##  Manual_data_files
+This folder contains:  
+* `utils.py`, a python scrit with morphological segmentation rule
+* `functions.py`, a set of functions that process the data
+*  `ortho_1.tsv`, an orthography profile for IPA conversion and grapheme standardization
+*  `towards_manually_edited.tsv`, a raw data that is a derived version of data before transformation into CLDF
 
 
-![Glottolog: 100%](https://img.shields.io/badge/Glottolog-100%25-brightgreen.svg "Glottolog: 100%")
-![Concepticon: 100%](https://img.shields.io/badge/Concepticon-100%25-brightgreen.svg "Concepticon: 100%")
-![Source: 100%](https://img.shields.io/badge/Source-100%25-brightgreen.svg "Source: 100%")
-![BIPA: 87%](https://img.shields.io/badge/BIPA-87%25-yellowgreen.svg "BIPA: 87%")
-![CLTS SoundClass: 87%](https://img.shields.io/badge/CLTS%20SoundClass-87%25-yellowgreen.svg "CLTS SoundClass: 87%")
+The `prepare_manual_data.py` script in the base folder, calls various functions from `functions.py` in `manual_data_files`, to parse data.  
+The output is deposited in the `raw` folder.
 
-- **Varieties:** 24
-- **Concepts:** 944
-- **Lexemes:** 15,249
-- **Sources:** 1
-- **Synonymy:** 1.00
-- **Invalid lexemes:** 0
-- **Tokens:** 98,078
-- **Segments:** 82 (11 BIPA errors, 11 CLTS sound class errors, 71 CLTS modified)
-- **Inventory size (avg):** 53.25
+## raw
+The raw folder contains the original data four datasets, which are crucial to CLDF conversion
 
-# Contributors
+The `lexibank_heathdogon.py` script takes the `manually-edited.csv` data, and the original data also available at https://github.com/languageorphans/heathdogon, and merges them.  
+The output is `forms.csv` which is found in the `cldf` folder.
 
-Name | GitHub user | Description | Role
---- | --- | --- | ---
-Abbie Hantgan | @IndianaTones | maintainer | Other
-Johann-Mattis List | @lingulist | maintainer | Other
-Jeffrey Heath | | data collector | Author
-Laura McPherson | | data collector | Author
-Kirill Prokhorov | | data collector | Author
-Steven Moran | | data collector | Author
+## cldf
+Thus `forms.csv` has morphologically segmented data where both original data and `manually-edited.csv`  entries are same.  
+Where forms exists in `manually-edited.csv`, but not in original data, there also is a segmened data
+Finally, where forms exist in original data, but not in `manually-edited.csv`, original data is concerved.
+More importantly, `cldf-metadata.json` contains the metadata description of the result of the cldf conversion
+
+The `edictor` folder, `etc` folder, and `lexibank_heathdogon.egg-info` contain files related to the cldf conversion process.
+
+After cldf conversion, the command line instruction  
+`edictor wordlist --dataset="cldf/cldf-metadata.json" \
+		--namespace='{"id": "local_id", "language_id": "doculect", "variety": "variety", "concept_name": "concept","value": "value", "form": "form", "segments": "tokens","plural_segments": "plural_tokens", "comment": "note", "concept_swadesh": "swadesh"}' \
+		--name="heathdogon-ungrouped"`
+is used to take the CLDF dataset (from the metadata file) and using edictor to process it into a wordlist.  
+The output is `heathdogon-ungrouped` in the root folder.
 
 
 
