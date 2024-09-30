@@ -25,6 +25,7 @@ NB: CLDF conversion is done using the following commands:
 * `pip install -e .`
 * `cldfbench lexibank.makecldf --glottolog="address/glottolog" --concepticon="address/concepticon-data" --clts="address/clts" --glottolog-version=v5.0 --concepticon-version=v3.2.0 --clts-version=v2.3.0 heathdogon`
 * adress = path on your local machine
+  
 The `lexibank_heathdogon.py` script in the base folder, takes the `manually-edited.csv` data, and the original data also available at https://github.com/languageorphans/heathdogon, and merges them.  
 The output is `forms.csv` which is found in the `cldf` folder.
 
