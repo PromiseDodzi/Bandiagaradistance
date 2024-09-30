@@ -48,7 +48,7 @@ The output is `heathdogon-ungrouped` in the root folder.
 This folder contains the geographical data `Geodata.csv` and a linguistics distance matrix 'linguistic_distance_matrix.csv'.
 The linguistic distance matrix is obtained after linguistic data is filtered by running 'coverage.py', and then `distance.py`
 
-# illustrations
+# Illustrations
 This folder contains all the graphs and illustrations contained in the paper.
 These are obtained from running `get_illustrations.py` in the root folder
 
