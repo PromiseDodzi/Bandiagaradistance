@@ -1,4 +1,4 @@
-#Bandiagaradistance
+# Bandiagaradistance
 This repository accompanies the paper `On linguistic and geographic distances in the Bandiagara` by Promise Dodzi Kpoglu. The repository contains both the data and source code used in the paper's experiments.
 
 # Data
