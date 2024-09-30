@@ -40,11 +40,3 @@ After cldf conversion, the command line instruction
 is used to take the CLDF dataset (from the metadata file) and using edictor to process it into a wordlist.  
 The output is `heathdogon-ungrouped` in the root folder.
 
-
-
-
-## CLDF Datasets
-
-The following CLDF datasets are available in [cldf](cldf):
-
-- CLDF [Wordlist](https://github.com/cldf/cldf/tree/master/modules/Wordlist) at [cldf\cldf-metadata.json](cldf\cldf-metadata.json)
