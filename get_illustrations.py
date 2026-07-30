@@ -196,14 +196,28 @@ class Getillustrations:
 
     
     def plot_difference_heatmap(self):
-        "returns heatmap of absolute differences between linguistic and geographic distance"
-        ling=self.linguistic_distance_matrix
-        geog=self.geographic_distance_matrix
-        diff=ling-geog
-        plt.figure(figsize=(10,5))
-        sns.heatmap(np.abs(diff), annot=True)
-        plt.title('Absolute differences between linguistic and geographic distance matrices')
-        plt.savefig("illustrations/heatmaps_of_absolute_differences")
+        """
+        Returns heatmap of absolute differences between linguistic and geographic distance matrices.
+        """
+        ling = self.linguistic_distance_matrix
+        geog = self.geographic_distance_matrix
+
+        diff = np.abs(ling - geog)
+
+        plt.figure(figsize=(14, 10))
+
+        ax = sns.heatmap(diff,annot=True,fmt=".2f",cmap="coolwarm")
+
+        plt.title('Absolute differences between linguistic and geographic distance matrices',fontsize=14)
+
+        # Rotate and align language labels
+        plt.xticks(rotation=45,ha="right",fontsize=9)
+        plt.yticks(rotation=0,fontsize=9)
+
+        # Give labels more room before saving
+        plt.tight_layout()
+
+        plt.savefig("illustrations/heatmaps_of_absolute_differences.png",dpi=300,bbox_inches="tight")
 
 
     def ling_cluster_on_geog(self):
@@ -243,24 +257,63 @@ class Getillustrations:
         plot  
 
     def plot_cluster_with_physical_geography(self):
-        "returns linguistic clusters on physical geography"
-        gv.extension('bokeh')  
-        df = self.lang_cluster_with_cord
-        gdf = gpd.GeoDataFrame(
-            df,
-            geometry=gpd.points_from_xy(df.longitude, df.latitude),
-            crs="EPSG:4326"
-        )
-        
-        points_plot = gdf.hvplot.points(
-            'longitude', 'latitude',
-            c='cluster', geo=True, hover_cols=['language'], size=50, cmap='viridis'
-        )
-        
-        tiles = EsriImagery()
-        map_with_points = tiles * points_plot
-        map_with_points.opts(title='Linguistic cluster with Physical Geography', tools=['hover'])
-        hv.save(map_with_points, 'illustrations/cluster_map_with_physical_geography.html', backend='bokeh')
+        """
+        Plot linguistic clusters using geographic distances reduced into 2D PCA space.
+        Each point represents a language positioned by its geographic similarity.
+        """
+
+        # Geographic distance matrix
+        distance_matrix = self.geographic_distance_matrix.values
+        n = distance_matrix.shape[0]
+
+        # Classical MDS / PCoA reduction 
+        H = np.eye(n) - np.ones((n, n)) / n
+        B = -0.5 * H @ (distance_matrix ** 2) @ H
+
+        eigenvalues, eigenvectors = np.linalg.eigh(B)
+
+        # Sort eigenvalues descending
+        idx = np.argsort(eigenvalues)[::-1]
+        eigenvalues = eigenvalues[idx]
+        eigenvectors = eigenvectors[:, idx]
+
+        # Keep first two dimensions
+        positive = eigenvalues[:2]
+        vectors = eigenvectors[:, :2]
+
+        coordinates = vectors * np.sqrt(positive)
+
+        # Build dataframe
+        df = self.lang_cluster_with_cord.copy()
+
+        # Match coordinate order to language order
+        language_order = list(self.geographic_distance_matrix.index)
+
+        coord_df = pd.DataFrame(coordinates,columns=["PC1", "PC2"],index=language_order)
+
+        df = df.set_index("language")
+        df = df.join(coord_df)
+        df = df.reset_index()
+
+        # Plot
+        plt.figure(figsize=(10, 8))
+
+        scatter = plt.scatter(df["PC1"],df["PC2"],c=df["cluster"],cmap="viridis",s=120,edgecolors="black")
+
+        # Language labels
+        for _, row in df.iterrows():
+            plt.text(row["PC1"],row["PC2"],row["language"],fontsize=8,ha="center",va="bottom")
+
+        plt.xlabel("Geographic PCA Dimension 1")
+        plt.ylabel("Geographic PCA Dimension 2")
+        plt.title("Linguistic Clusters Projected onto Geographic PCA Space")
+
+        plt.grid(True, alpha=0.3)
+        plt.colorbar(scatter, label="Linguistic Cluster")
+
+        plt.tight_layout()
+        plt.savefig("illustrations/cluster_geographic_pca.png",dpi=300)
+        plt.show()
         
     def plot_tau_tui(self):
         "returns a bivariate distribution of Kendall's Tau scores and TUI scores"

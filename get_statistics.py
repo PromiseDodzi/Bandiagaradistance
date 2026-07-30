@@ -203,49 +203,68 @@ class GetStatistics:
             print(f"Cluster: {cluster}\nTau: {tau:.2f}")
 
     def get_tau_tui(self):
-        "Computes Kendall's tau correlation and topological uniformity index."
-        direct_cluster_1_langs=self.sorted_ling[self.sorted_ling["Cluster"]==1]["Language"].values
-        direct_cluster_2_langs=self.sorted_ling[self.sorted_ling["Cluster"]==2]["Language"].values
-        direct_cluster_3_langs=self.sorted_ling[self.sorted_ling["Cluster"]==3]["Language"].values
-        direct_cluster_4_langs=self.sorted_ling[self.sorted_ling["Cluster"]==4]["Language"].values
-        
-        geog_cluster_1_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_1_langs]
-        geog_cluster_2_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_2_langs]
-        geog_cluster_3_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_3_langs]
-        geog_cluster_4_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_4_langs]
-        
-        ling=[direct_cluster_1_langs, direct_cluster_2_langs, direct_cluster_3_langs, direct_cluster_4_langs]
-        geog=[geog_cluster_1_langs, geog_cluster_2_langs, geog_cluster_3_langs, geog_cluster_4_langs]
-        
-        tau_list=[]
-        cluster=0
-        for li, ge in zip(ling,geog):
-            tau, _ = kendalltau(li, ge)
-            rho, _ = spearmanr(li, ge)
-        
-            cluster +=1 
-            tau, rho
-            tau_list.append(tau)
-        
-        #get group TUI
-        tui_data=self.cluster_tui()
-        tui_data["averaged_lang_tui"]=tui_data["language_tui"]/tui_data["Total"]
-        group_tui=tui_data.groupby("Cluster").sum().reset_index()[["Cluster", "averaged_lang_tui"]]
-        group_tui["group_tui"]=group_tui["averaged_lang_tui"]
-        group_tui.drop("averaged_lang_tui", axis=1, inplace=True)
-        print("Group TUI scores:")
-        cluster=1
-        for num in group_tui["group_tui"]:
-            print(f"cluster={cluster}, TUI={num:.2f}")
-            cluster +=1
-        print("*"*20)
+            "Computes Kendall's tau correlation and topological uniformity index."
+            direct_cluster_1_langs=self.sorted_ling[self.sorted_ling["Cluster"]==1]["Language"].values
+            direct_cluster_2_langs=self.sorted_ling[self.sorted_ling["Cluster"]==2]["Language"].values
+            direct_cluster_3_langs=self.sorted_ling[self.sorted_ling["Cluster"]==3]["Language"].values
+            direct_cluster_4_langs=self.sorted_ling[self.sorted_ling["Cluster"]==4]["Language"].values
 
-        tui=group_tui["group_tui"].values
-        tui_tau = pd.DataFrame({"tui": tui, "tau": tau_list})
+            geog_cluster_1_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_1_langs]
+            geog_cluster_2_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_2_langs]
+            geog_cluster_3_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_3_langs]
+            geog_cluster_4_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_4_langs]
 
-        print("Kendall's Tau correlation between linguistic clusters and geographic distance-induced clusters")
-        print("Correlation between TUI and TAU")
-        print(tui_tau.corr())
+            ling=[direct_cluster_1_langs, direct_cluster_2_langs, direct_cluster_3_langs, direct_cluster_4_langs]
+            geog=[geog_cluster_1_langs, geog_cluster_2_langs, geog_cluster_3_langs, geog_cluster_4_langs]
+
+            # full ordering of languages in each overall sorted list, used to derive numeric ranks
+            ling_order = list(self.sorted_ling["Language"].values)
+            geog_order = list(self.sorted_geog["Language"].values)
+
+            tau_list=[]
+            for cluster, (li, ge) in enumerate(zip(ling, geog), start=1):
+                li = list(li)
+                ge = list(ge)
+                common = [lang for lang in li if lang in ge]
+
+                tau = np.nan
+                if len(common) < 2:
+                    print(f"  -> skipping cluster {cluster}: fewer than 2 shared languages")
+                else:
+                    # convert language names to their numeric rank position in each ordering
+                    li_ranks = [ling_order.index(lang) for lang in common]
+                    ge_ranks = [geog_order.index(lang) for lang in common]
+                    try:
+                        tau, _ = kendalltau(li_ranks, ge_ranks)
+                    except Exception as e:
+                        print(f"  -> kendalltau failed for cluster {cluster}: {e}")
+
+                tau_list.append(tau)
+
+            #get group TUI
+            tui_data=self.cluster_tui()
+            tui_data["averaged_lang_tui"]=tui_data["language_tui"]/tui_data["Total"]
+            group_tui=tui_data.groupby("Cluster").sum().reset_index()[["Cluster", "averaged_lang_tui"]]
+            group_tui["group_tui"]=group_tui["averaged_lang_tui"]
+            group_tui.drop("averaged_lang_tui", axis=1, inplace=True)
+            print("Group TUI scores:")
+            cluster=1
+            for num in group_tui["group_tui"]:
+                print(f"cluster={cluster}, TUI={num:.2f}")
+                cluster +=1
+            print("*"*20)
+
+            tui=group_tui["group_tui"].values
+            tui_tau = pd.DataFrame({"tui": tui, "tau": tau_list})
+            tui_tau_clean = tui_tau.dropna(subset=["tau"])
+
+            if tui_tau_clean.empty:
+                print("No valid tau values to correlate — check the cluster diagnostics printed above.")
+                return
+
+            print("Kendall's Tau correlation between linguistic clusters and geographic distance-induced clusters")
+            print("Correlation between TUI and TAU")
+            print(tui_tau_clean.corr())
 
     def model_fit_and_coefficients(self, X, y):
         "fits a model and conducts a hosmer_lemmeshow test on model"
