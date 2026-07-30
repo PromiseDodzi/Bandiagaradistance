@@ -1,4 +1,4 @@
-#!d:\ERC_Bang\Tasks\lora_workshop_2\Bandiagaradistance\.venv\Scripts\python.exe
+#!D:\ERC_Bang\Tasks\lora_workshop_2\Bandiagaradistance\.venv\Scripts\python.exe
 
 import sys
 import json

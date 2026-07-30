@@ -20,7 +20,7 @@ A basic example using `numpy.datetime64` is::
 
 .. seealso::
 
-    - :doc:`/gallery/text_labels_and_annotations/date`
+    - :doc:`/gallery/ticks/date`
     - :doc:`/gallery/ticks/date_concise_formatter`
     - :doc:`/gallery/ticks/date_demo_convert`
 
@@ -37,7 +37,7 @@ year 0001 and 9999 can be represented.  Microsecond precision
 is achievable for (approximately) 70 years on either side of the epoch, and
 20 microseconds for the rest of the allowable range of dates (year 0001 to
 9999). The epoch can be changed at import time via `.dates.set_epoch` or
-:rc:`dates.epoch` to other dates if necessary; see
+:rc:`date.epoch` to other dates if necessary; see
 :doc:`/gallery/ticks/date_precision_and_epochs` for a discussion.
 
 .. note::
@@ -267,7 +267,7 @@ def set_epoch(epoch):
     """
     Set the epoch (origin for dates) for datetime calculations.
 
-    The default epoch is :rc:`dates.epoch` (by default 1970-01-01T00:00).
+    The default epoch is :rc:`date.epoch`.
 
     If microsecond accuracy is desired, the date being plotted needs to be
     within approximately 70 years of the epoch. Matplotlib internally
@@ -309,7 +309,7 @@ def get_epoch():
 
 def _dt64_to_ordinalf(d):
     """
-    Convert `numpy.datetime64` or an `numpy.ndarray` of those types to
+    Convert a `numpy.ndarray` of np.datetime64 to
     Gregorian date as UTC float relative to the epoch (see `.get_epoch`).
     Roundoff is float64 precision.  Practically: microseconds for dates
     between 290301 BC, 294241 AD, milliseconds for larger dates
@@ -325,9 +325,7 @@ def _dt64_to_ordinalf(d):
     dt += extra.astype(np.float64) / 1.0e9
     dt = dt / SEC_PER_DAY
 
-    NaT_int = np.datetime64('NaT').astype(np.int64)
-    d_int = d.astype(np.int64)
-    dt[d_int == NaT_int] = np.nan
+    dt[np.isnat(d)] = np.nan
     return dt
 
 
@@ -537,7 +535,7 @@ def drange(dstart, dend, delta):
     # calculate end of the interval which will be generated
     dinterval_end = dstart + num * delta
 
-    # ensure, that an half open interval will be generated [dstart, dend)
+    # ensure, that a half open interval will be generated [dstart, dend)
     if dinterval_end >= dend:
         # if the endpoint is greater than or equal to dend,
         # just subtract one delta
@@ -665,6 +663,10 @@ class ConciseDateFormatter(ticker.Formatter):
 
     """
 
+    offset_string = _api.deprecate_privatize_attribute(
+        "3.11", alternative="get_offset()"
+    )
+
     def __init__(self, locator, tz=None, formats=None, offset_formats=None,
                  zero_formats=None, show_offset=True, *, usetex=None):
         """
@@ -719,7 +721,7 @@ class ConciseDateFormatter(ticker.Formatter):
                                    '%Y-%b-%d',
                                    '%Y-%b-%d',
                                    '%Y-%b-%d %H:%M']
-        self.offset_string = ''
+        self._offset_string = ''
         self.show_offset = show_offset
         self._usetex = mpl._val_or_rc(usetex, 'text.usetex')
 
@@ -796,11 +798,16 @@ class ConciseDateFormatter(ticker.Formatter):
 
         if show_offset:
             # set the offset string:
-            self.offset_string = tickdatetime[-1].strftime(offsetfmts[level])
+            if (self._locator.axis and
+                    self._locator.axis.__name__ in ('xaxis', 'yaxis')
+                    and self._locator.axis.get_inverted()):
+                self._offset_string = tickdatetime[0].strftime(offsetfmts[level])
+            else:
+                self._offset_string = tickdatetime[-1].strftime(offsetfmts[level])
             if self._usetex:
-                self.offset_string = _wrap_in_tex(self.offset_string)
+                self._offset_string = _wrap_in_tex(self._offset_string)
         else:
-            self.offset_string = ''
+            self._offset_string = ''
 
         if self._usetex:
             return [_wrap_in_tex(l) for l in labels]
@@ -808,7 +815,7 @@ class ConciseDateFormatter(ticker.Formatter):
             return labels
 
     def get_offset(self):
-        return self.offset_string
+        return self._offset_string
 
     def format_data_short(self, value):
         return num2date(value, tz=self._tz).strftime('%Y-%m-%d %H:%M:%S')
@@ -819,7 +826,7 @@ class AutoDateFormatter(ticker.Formatter):
     A `.Formatter` which attempts to figure out the best format to use.  This
     is most useful when used with the `AutoDateLocator`.
 
-    `.AutoDateFormatter` has a ``.scale`` dictionary that maps tick scales (the
+    `.AutoDateFormatter` has a ``.scaled`` dictionary that maps tick scales (the
     interval in days between one major tick) to format strings; this dictionary
     defaults to ::
 
@@ -1525,13 +1532,15 @@ class WeekdayLocator(RRuleLocator):
         """
         Parameters
         ----------
-        byweekday : int or list of int, default: all days
+        byweekday : int, list of int, constant from :mod:`dateutil.rrule`, or \
+            list of constants, default: 1 (Tuesday)
             Ticks will be placed on every weekday in *byweekday*. Default is
-            every day.
+            every Tuesday.
 
-            Elements of *byweekday* must be one of MO, TU, WE, TH, FR, SA,
-            SU, the constants from :mod:`dateutil.rrule`, which have been
-            imported into the :mod:`matplotlib.dates` namespace.
+            Elements of *byweekday* (if a sequence) must be either integers or
+            MO, TU, WE, TH, FR, SA, SU, the constants from
+            :mod:`dateutil.rrule`, which have been imported into the
+            :mod:`matplotlib.dates` namespace.
         interval : int, default: 1
             The interval between each iteration. For example, if
             ``interval=2``, mark every second occurrence.

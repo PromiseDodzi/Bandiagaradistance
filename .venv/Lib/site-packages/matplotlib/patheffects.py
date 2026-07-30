@@ -96,6 +96,13 @@ class PathEffectRenderer(RendererBase):
     def copy_with_path_effect(self, path_effects):
         return self.__class__(path_effects, self._renderer)
 
+    def __getattribute__(self, name):
+        if name in ['flipy', 'get_canvas_width_height', 'new_gc',
+                    'points_to_pixels', '_text2path', 'height', 'width']:
+            return getattr(self._renderer, name)
+        else:
+            return object.__getattribute__(self, name)
+
     def draw_path(self, gc, tpath, affine, rgbFace=None):
         for path_effect in self._path_effects:
             path_effect.draw_path(self._renderer, gc, tpath, affine,
@@ -136,21 +143,6 @@ class PathEffectRenderer(RendererBase):
             # one path effect.
             renderer.draw_path_collection(gc, master_transform, paths,
                                           *args, **kwargs)
-
-    def _draw_text_as_path(self, gc, x, y, s, prop, angle, ismath):
-        # Implements the naive text drawing as is found in RendererBase.
-        path, transform = self._get_text_path_transform(x, y, s, prop,
-                                                        angle, ismath)
-        color = gc.get_rgb()
-        gc.set_linewidth(0.0)
-        self.draw_path(gc, path, transform, rgbFace=color)
-
-    def __getattribute__(self, name):
-        if name in ['flipy', 'get_canvas_width_height', 'new_gc',
-                    'points_to_pixels', '_text2path', 'height', 'width']:
-            return getattr(self._renderer, name)
-        else:
-            return object.__getattribute__(self, name)
 
     def open_group(self, s, gid=None):
         return self._renderer.open_group(s, gid)
@@ -243,7 +235,7 @@ class SimplePatchShadow(AbstractPathEffect):
             is not specified.
         **kwargs
             Extra keywords are stored and passed through to
-            :meth:`AbstractPathEffect._update_gc`.
+            :meth:`!AbstractPathEffect._update_gc`.
 
         """
         super().__init__(offset)
@@ -277,7 +269,7 @@ class SimplePatchShadow(AbstractPathEffect):
         else:
             shadow_rgbFace = self._shadow_rgbFace
 
-        gc0.set_foreground("none")
+        gc0.set_foreground(mcolors.to_rgba("none"), isRGBA=True)
         gc0.set_alpha(self._alpha)
         gc0.set_linewidth(0)
 
@@ -312,7 +304,7 @@ class SimpleLineShadow(AbstractPathEffect):
             is ``None``.
         **kwargs
             Extra keywords are stored and passed through to
-            :meth:`AbstractPathEffect._update_gc`.
+            :meth:`!AbstractPathEffect._update_gc`.
         """
         super().__init__(offset)
         if shadow_color is None:
@@ -333,13 +325,13 @@ class SimpleLineShadow(AbstractPathEffect):
         gc0.copy_properties(gc)
 
         if self._shadow_color is None:
-            r, g, b = (gc0.get_foreground() or (1., 1., 1.))[:3]
+            r, g, b = (gc0.get_rgb() or (1., 1., 1.))[:3]
             # Scale the colors by a factor to improve the shadow effect.
             shadow_rgbFace = (r * self._rho, g * self._rho, b * self._rho)
         else:
             shadow_rgbFace = self._shadow_color
 
-        gc0.set_foreground(shadow_rgbFace)
+        gc0.set_foreground(mcolors.to_rgba(shadow_rgbFace), isRGBA=True)
         gc0.set_alpha(self._alpha)
 
         gc0 = self._update_gc(gc0, self._gc)
@@ -417,7 +409,7 @@ class TickedStroke(AbstractPathEffect):
             when angle=90 and length=2.0 when angle=60.
         **kwargs
             Extra keywords are stored and passed through to
-            :meth:`AbstractPathEffect._update_gc`.
+            :meth:`!AbstractPathEffect._update_gc`.
 
         Examples
         --------

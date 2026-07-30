@@ -20,22 +20,20 @@ log = logging.getLogger(__name__)
 # Imports
 #-----------------------------------------------------------------------------
 
+# Standard library imports
+from typing import Any
+
 # Bokeh imports
 from ..core.enums import JitterRandomDistribution, StepMode
 from ..core.has_props import abstract
-from ..core.properties import (
-    AnyRef,
-    Bool,
-    Dict,
-    Either,
-    Enum,
-    Float,
-    Instance,
-    Nullable,
-    Required,
-    Seq,
-    String,
-)
+from ..core.property.any import AnyRef
+from ..core.property.container import Dict, Seq
+from ..core.property.either import Either
+from ..core.property.enum import Enum
+from ..core.property.instance import Instance
+from ..core.property.nullable import Nullable
+from ..core.property.primitive import Bool, Float, String
+from ..core.property.required import Required
 from ..model import Model
 from .sources import ColumnarDataSource
 
@@ -64,20 +62,20 @@ class Transform(Model):
 
     JavaScript implementations should implement the following methods:
 
-    .. code-block
+    .. code-block:: typescript
 
         compute(x: number): number {
-            # compute and return the transform of a single value
+            // compute and return the transform of a single value
         }
 
         v_compute(xs: Arrayable<number>): Arrayable<number> {
-            # compute and return the transform of an array of values
+            // compute and return the transform of an array of values
         }
 
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 
@@ -93,7 +91,7 @@ class CustomJSTransform(Transform):
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     args = Dict(String, AnyRef, help="""
@@ -147,7 +145,7 @@ class Dodge(Transform):
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     value = Float(default=0, help="""
@@ -166,7 +164,7 @@ class Jitter(Transform):
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     mean = Float(default=0, help="""
@@ -220,7 +218,7 @@ class Interpolator(Transform):
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     x = Required(Either(String, Seq(Float)), help="""
@@ -228,7 +226,7 @@ class Interpolator(Transform):
     """)
 
     y = Required(Either(String, Seq(Float)), help="""
-    Dependant coordinate denoting the value of a point at a location.
+    Dependent coordinate denoting the value of a point at a location.
     """)
 
     data = Nullable(Instance(ColumnarDataSource), help="""
@@ -248,7 +246,7 @@ class LinearInterpolator(Interpolator):
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 
@@ -259,7 +257,7 @@ class StepInterpolator(Interpolator):
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     mode = Enum(StepMode, default="after", help="""

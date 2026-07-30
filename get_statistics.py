@@ -19,6 +19,7 @@ geographic_distance_matrix=datasets.geographic_distance_matrix
 sorted_ling=datasets.sorted_ling
 sorted_geog=datasets.sorted_geog
 data_for_regression=datasets.data_for_regression
+cluster_tui=datasets.lang_cluster_tui_individual
 
 
 class GetStatistics:
@@ -28,7 +29,7 @@ class GetStatistics:
                  geographic_distance_matrix_euclidean=geographic_distance_matrix_euclidean,
                  linguistic_distance_matrix=linguistic_distance_matrix,
                 sorted_ling=sorted_ling, sorted_geog=sorted_geog, 
-                 data_for_regression=data_for_regression):
+                 data_for_regression=data_for_regression, cluster_tui=cluster_tui):
         
         self.geographic_distance_matrix = geographic_distance_matrix
         self.geographic_distance_matrix_haversine = geographic_distance_matrix_haversine
@@ -37,6 +38,7 @@ class GetStatistics:
         self.sorted_ling=sorted_ling
         self.sorted_geog=sorted_geog
         self.data_for_regression=data_for_regression
+        self.cluster_tui=cluster_tui
 
     def get_basic_descriptive_stats(self):
         "returns descriptive statistics of both linguistic and geographic distances"
@@ -76,26 +78,29 @@ class GetStatistics:
         print(f"Pearson's Correlation: {correlation}")
         print(f"{'*'*20}\n{'*'*20}")
 
-    def calculate_kruskalstress(self, matrix):
-        "Calculates Kruskal's stress for a given distance matrix."
+    def calculate_kruskalstress_global(self, matrix):
+        "Calculates Kruskal's global stress for the entire distance matrix."
+        matrix=np.array(matrix)
+        
         mds = MDS(n_components=2, dissimilarity="precomputed", random_state=42)
         embedding = mds.fit_transform(matrix)
+        
         lower_dim_distances = euclidean_distances(embedding)
-
+        
         numerator = np.sum((matrix - lower_dim_distances) ** 2)
         denominator = np.sum(matrix ** 2)
-        stress = np.sqrt(numerator / denominator)
+        global_stress = np.sqrt(numerator / denominator)
+        
+        return global_stress
 
-        return stress
-    
-    def get_kruskal(self):
-        "Prints Kruskal's stress values for linguistic and geographic distance matrices."
-        linguistic_stress = self.calculate_kruskalstress(self.linguistic_distance_matrix)
-        geographic_stress = self.calculate_kruskalstress(self.geographic_distance_matrix)
-
-        print("Kruskal's stress values")
-        print(f"Kruskal's stress for linguistic distance matrix: {linguistic_stress}")
-        print(f"Kruskal's stress for geographic distance matrix: {geographic_stress}")
+    def get_kruskal_global(self):
+        "Prints the global Kruskal's stress values for linguistic and geographic distance matrices."
+        linguistic_stress_global = self.calculate_kruskalstress_global(self.linguistic_distance_matrix)
+        geographic_stress_global = self.calculate_kruskalstress_global(self.geographic_distance_matrix)
+        
+        print("Global Kruskal's stress values:")
+        print(f"Global Kruskal's stress for linguistic distance matrix: {linguistic_stress_global}")
+        print(f"Global Kruskal's stress for geographic distance matrix: {geographic_stress_global}")
         print(f"{'*'*20}\n{'*'*20}")
 
     def matrices_differences(self):
@@ -222,7 +227,20 @@ class GetStatistics:
             tau, rho
             tau_list.append(tau)
         
-        tui=[max(3,0)/3,max(2, 1)/3,max(4, 1)/5, max(1, 5)/6]
+        #get group TUI
+        tui_data=self.cluster_tui()
+        tui_data["averaged_lang_tui"]=tui_data["language_tui"]/tui_data["Total"]
+        group_tui=tui_data.groupby("Cluster").sum().reset_index()[["Cluster", "averaged_lang_tui"]]
+        group_tui["group_tui"]=group_tui["averaged_lang_tui"]
+        group_tui.drop("averaged_lang_tui", axis=1, inplace=True)
+        print("Group TUI scores:")
+        cluster=1
+        for num in group_tui["group_tui"]:
+            print(f"cluster={cluster}, TUI={num:.2f}")
+            cluster +=1
+        print("*"*20)
+
+        tui=group_tui["group_tui"].values
         tui_tau = pd.DataFrame({"tui": tui, "tau": tau_list})
 
         print("Kendall's Tau correlation between linguistic clusters and geographic distance-induced clusters")
@@ -231,7 +249,7 @@ class GetStatistics:
 
     def model_fit_and_coefficients(self, X, y):
         "fits a model and conducts a hosmer_lemmeshow test on model"
-        model = make_pipeline(StandardScaler(), LogisticRegression(multi_class='multinomial', solver='lbfgs', max_iter=200))
+        model = make_pipeline(StandardScaler(), LogisticRegression(solver='lbfgs', max_iter=200))
         model.fit(X, y)
         
         pred_probs = model.predict_proba(X)
@@ -323,12 +341,13 @@ def run_stats():
     get_stats.compare_geographical_distances()
     get_stats.get_basic_descriptive_stats()
     get_stats.matrices_differences()
-    get_stats.get_kruskal()
+    get_stats.get_kruskal_global()
     get_stats.matrices_correlations()
     get_stats.get_threshold_corr_scores()
     get_stats.get_tau()
     get_stats.get_tau_tui()
     get_stats.print_coefficients()
+    # print(get_stats.sorted_ling)
 
 if __name__ == "__main__":
     run_stats()

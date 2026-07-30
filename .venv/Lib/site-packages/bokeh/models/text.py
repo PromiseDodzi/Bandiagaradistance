@@ -19,17 +19,15 @@ log = logging.getLogger(__name__)
 # Imports
 #-----------------------------------------------------------------------------
 
+# Standard library imports
+from typing import Any
+
 # Bokeh imports
 from ..core.has_props import abstract
-from ..core.properties import (
-    Bool,
-    Dict,
-    Either,
-    Int,
-    Required,
-    String,
-    Tuple,
-)
+from ..core.property.container import Dict, Tuple
+from ..core.property.either import Either
+from ..core.property.primitive import Bool, Int, String
+from ..core.property.required import Required
 from ..model import Model
 
 #-----------------------------------------------------------------------------
@@ -71,7 +69,7 @@ class MathText(BaseText):
     """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 class Ascii(MathText):
@@ -81,7 +79,7 @@ class Ascii(MathText):
     """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 class MathML(MathText):
@@ -93,7 +91,7 @@ class MathML(MathText):
     """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 class TeX(MathText):
@@ -113,7 +111,7 @@ class TeX(MathText):
     """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     macros = Dict(String, Either(String, Tuple(String, Int)), help="""
@@ -141,7 +139,7 @@ class PlainText(BaseText):
     """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 #-----------------------------------------------------------------------------

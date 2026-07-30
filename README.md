@@ -1,90 +1,86 @@
-# Bandiagaradistance
-This repository accompanies the paper `On linguistic and geographic distances in the Bandiagara` by Promise Dodzi Kpoglu. The repository contains both the data and source code used in the paper's experiments.
+# On linguistic and geographic distances in the Bandiagara
 
-# Data
-Data for this paper is derived from Heath et al's "Dogon Comparative Wordlist" from 2016.  
-The orginal data curated in CLDF (Cross Linguistic Data Format) is publicly available at the following link: https://github.com/languageorphans/heathdogon.
-However, the original data is not morphologically segmented.
-The current paper first segments the data after reading the various grammars available on the Dogon languages.  
-All files relating to further processing of data are done in manual_data_files
+This repository reproduces the analyses and figures used in the paper entitled "On linguistic and geographic distances in the Bandiagara".
 
-##  Manual_data_files
-This folder contains:  
-* `utils.py`, a python scrit with morphological segmentation rule
-* `functions.py`, a set of functions that process the data
-*  `ortho_1.tsv`, an orthography profile for IPA conversion and grapheme standardization
-*  `towards_manually_edited.tsv`, a raw data that is a derived version of data before transformation into CLDF
+## Overview
 
+The workflow is organized in four stages:
 
-The `prepare_manual_data.py` script in the base folder, calls various functions from `functions.py` in `manual_data_files`, to parse data.  
-The output is deposited in the `raw` folder.
+1. Prepare and shorten the lexical dataset.
+2. Compute cognate clusters and a linguistic distance matrix.
+3. Generate the illustrations and maps.
+4. Run the statistical analyses.
 
-## raw
-The raw folder contains the original data four datasets, which are crucial to CLDF conversion
-NB: CLDF conversion is done using the following commands:
-* `pip install -e .`
-* `cldfbench lexibank.makecldf --glottolog="address/glottolog" --concepticon="address/concepticon-data" --clts="address/clts" --glottolog-version=v5.0 --concepticon-version=v3.2.0 --clts-version=v2.3.0 heathdogon`
-* adress = path on your local machine
-  
-The `lexibank_heathdogon.py` script in the base folder, takes the `manually-edited.csv` data, and the original data also available at https://github.com/languageorphans/heathdogon, and merges them.  
-The output is `forms.csv` which is found in the `cldf` folder.
+All scripts should be run from the repository root.
 
-<<<<<<< HEAD
-![Glottolog: 100%](https://img.shields.io/badge/Glottolog-100%25-brightgreen.svg "Glottolog: 100%")
-![Concepticon: 100%](https://img.shields.io/badge/Concepticon-100%25-brightgreen.svg "Concepticon: 100%")
-![Source: 100%](https://img.shields.io/badge/Source-100%25-brightgreen.svg "Source: 100%")
-![BIPA: 84%](https://img.shields.io/badge/BIPA-84%25-yellowgreen.svg "BIPA: 84%")
-![CLTS SoundClass: 84%](https://img.shields.io/badge/CLTS%20SoundClass-84%25-yellowgreen.svg "CLTS SoundClass: 84%")
+## Requirements
 
-- **Varieties:** 24 (linked to 20 different Glottocodes)
-- **Concepts:** 944 (linked to 880 different Concepticon concept sets)
-- **Lexemes:** 16,271
-- **Sources:** 1
-- **Synonymy:** 1.06
-- **Invalid lexemes:** 0
-- **Tokens:** 109,859
-- **Segments:** 82 (13 BIPA errors, 13 CLTS sound class errors, 69 CLTS modified)
-- **Inventory size (avg):** 48.38
-=======
-## cldf
-Thus `forms.csv` has morphologically segmented data where both original data and `manually-edited.csv`  entries are same.  
-Where forms exists in `manually-edited.csv`, but not in original data, there also is a segmened data
-Finally, where forms exist in original data, but not in `manually-edited.csv`, original data is concerved.
-More importantly, `cldf-metadata.json` contains the metadata description of the result of the cldf conversion
+Use the project Python environment (the repository is configured to use `myenv`).
 
-The `edictor` folder, `etc` folder, and `lexibank_heathdogon.egg-info` contain files related to the cldf conversion process.
->>>>>>> 770842e2e36776524d3394b5cf55c97d9a2fca37
+On Windows PowerShell, the typical setup is:
 
-After cldf conversion, the command line instruction  
-`edictor wordlist --dataset="cldf/cldf-metadata.json" \
-		--namespace='{"id": "local_id", "language_id": "doculect", "variety": "variety", "concept_name": "concept","value": "value", "form": "form", "segments": "tokens","plural_segments": "plural_tokens", "comment": "note", "concept_swadesh": "swadesh"}' \
-		--name="heathdogon-ungrouped"`
-is used to take the CLDF dataset (from the metadata file) and using edictor to process it into a wordlist.  
-The output is `heathdogon-ungrouped` in the root folder.
+```powershell
+# from the project root
+.
+\myenv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
 
-## matrices
-This folder contains the geographical data `Geodata.csv` and a linguistics distance matrix 'linguistic_distance_matrix.csv'.
-The linguistic distance matrix is obtained after linguistic data is filtered by running 'coverage.py', and then `distance.py`
+If your environment is already activated, you can skip the activation step.
 
-# Illustrations
-This folder contains all the graphs and illustrations contained in the paper.
-These are obtained from running `get_illustrations.py` in the root folder
+## Reproduction workflow
 
-# Command line displays
-All statistics in the paper can be obtained by running `get_statistics.py`.  
-This displays all statistics
+Run the scripts in the following order:
 
-# Commands
-Prior to running the following commands, clone this repository and run pip install -r requirements.txt
+```powershell
+python coverage.py
+python distance.py
+python get_illustrations.py
+python get_statistics.py
+```
 
-* `python prepare_manual_data.py`, runs the segmentation rule 'utils.py' on manually processed data by calling on various functions in 'functions.py' and outputs `manually-edited.csv` into the `raw` folder.
-* `pip install -e .` to install all dependencies for cldf data conversion
-* run cldfbench lexibank.makecldf command by replacing address in the following command with a path to glottolog, concepticon and clts - which can be downloaded
-  `cldfbench lexibank.makecldf --glottolog="address/glottolog" --concepticon="address/concepticon-data" --clts="address/clts" --glottolog-version=v5.0 --concepticon-version=v3.2.0 --clts-version=v2.3.0 heathdogon`
-* convert cldf data into wordlist by running `edictor wordlist --dataset="cldf/cldf-metadata.json" \
-		--namespace='{"id": "local_id", "language_id": "doculect", "variety": "variety", "concept_name": "concept","value": "value", "form": "form", "segments": "tokens","plural_segments": "plural_tokens", "comment": "note", "concept_swadesh": "swadesh"}' \
-		--name="heathdogon-ungrouped`
-* `python coverage.py`, filters data according to coverage by favoring breath.
-* `python distance.py`, undertakes automatic cognate detction, cognate alignment and linguistic distance calculation, and outputs results into `matrices folder`
-* `python get_illustrations.py`, undertakes calculates and outputs all graphs and illustrations used in the paper.
-* `python get_statistics.py`, prints all statistics to the command line
+### What each step does
+
+- `coverage.py`
+  - Loads the cleaned lexical dataset.
+  - Selects a reduced set of languages and concepts.
+  - Writes the shortened wordlist to `processed_data/value_cleaned_data-shortened.tsv`.
+
+- `distance.py`
+  - Cleans the shortened dataset.
+  - Runs cognate clustering with LingPy.
+  - Produces an aligned wordlist and saves the linguistic distance matrix to `matrices/linguistic_distance_matrix.csv`.
+
+- `get_illustrations.py`
+  - Generates the figures and maps used in the paper.
+  - Outputs are written to the `Illustrations/` directory.
+
+- `get_statistics.py`
+  - Computes the statistical analyses reported in the study.
+  - Results are printed to the console.
+
+## Expected outputs
+
+After the full workflow, you should have:
+
+- `processed_data/value_cleaned_data-shortened.tsv`
+- `processed_data/value_cleaned_data-clean.tsv`
+- `processed_data/value_cleaned_data-clean-aligned.tsv`
+- `matrices/linguistic_distance_matrix.csv`
+- Figures and HTML maps in `Illustrations/`
+
+## Data sources
+
+Linguistic data:
+
+Abbie Hantgan-Sonko, Promise Dodzi Kpoglu, Idrissa Amadiougo Sagara (June 1, 2026). Building a Consolidated Dogon Lexical Dataset. *The Small Bang*. Retrieved July 30, 2026 from https://bang.hypotheses.org/257
+
+Geographic data:
+
+Moran, Steven & Forkel, Robert & Heath, Jeffrey (eds.) 2016. *Dogon and Bangime Linguistics*. Jena: Max Planck Institute for the Science of Human History. Available online at http://dogonlanguages.info, accessed on 2026-07-30.
+
+## Notes
+
+- The repository already contains the required input files under `processed_data/` and `matrices/`.
+- Run all commands from the project root so that the scripts can find the expected files.
+- If you encounter dependency issues, ensure that your active Python environment matches the one used for the project.

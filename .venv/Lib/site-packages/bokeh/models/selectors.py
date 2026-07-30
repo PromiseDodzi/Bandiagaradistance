@@ -20,10 +20,14 @@ log = logging.getLogger(__name__)
 # Imports
 #-----------------------------------------------------------------------------
 
+# Standard library imports
+from typing import Any
+
 # Bokeh imports
 from ..core.has_props import abstract
-from ..core.properties import Required, String
 from ..core.property.bases import Init
+from ..core.property.primitive import String
+from ..core.property.required import Required
 from ..core.property.singletons import Intrinsic
 from ..model import Model
 
@@ -47,14 +51,14 @@ class Selector(Model):
     """ Base class for selector queries. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 class ByID(Selector):
     """ Represents a CSS ID selector query. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, query: Init[str] = Intrinsic, **kwargs) -> None:
+    def __init__(self, query: Init[str] = Intrinsic, **kwargs: Any) -> None:
         super().__init__(query=query, **kwargs)
 
     query = Required(String, help="""
@@ -65,7 +69,7 @@ class ByClass(Selector):
     """ Represents a CSS class selector query. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, query: Init[str] = Intrinsic, **kwargs) -> None:
+    def __init__(self, query: Init[str] = Intrinsic, **kwargs: Any) -> None:
         super().__init__(query=query, **kwargs)
 
     query = Required(String, help="""
@@ -76,7 +80,7 @@ class ByCSS(Selector):
     """ Represents a CSS selector query. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, query: Init[str] = Intrinsic, **kwargs) -> None:
+    def __init__(self, query: Init[str] = Intrinsic, **kwargs: Any) -> None:
         super().__init__(query=query, **kwargs)
 
     query = Required(String, help="""
@@ -87,7 +91,7 @@ class ByXPath(Selector):
     """ Represents an XPath selector query. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, query: Init[str] = Intrinsic, **kwargs) -> None:
+    def __init__(self, query: Init[str] = Intrinsic, **kwargs: Any) -> None:
         super().__init__(query=query, **kwargs)
 
     query = Required(String, help="""

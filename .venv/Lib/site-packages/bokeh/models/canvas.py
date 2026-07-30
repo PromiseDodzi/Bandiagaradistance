@@ -17,9 +17,13 @@ log = logging.getLogger(__name__)
 # Imports
 #-----------------------------------------------------------------------------
 
+# Standard library imports
+from typing import Any
+
 # Bokeh imports
 from ..core.enums import OutputBackend
-from ..core.properties import Bool, Enum
+from ..core.property.enum import Enum
+from ..core.property.primitive import Bool
 from .ui import UIElement
 
 #-----------------------------------------------------------------------------
@@ -38,7 +42,7 @@ class Canvas(UIElement):
     """ """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     hidpi = Bool(default=True, help="""

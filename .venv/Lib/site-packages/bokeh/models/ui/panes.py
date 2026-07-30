@@ -18,8 +18,13 @@ log = logging.getLogger(__name__)
 # Imports
 #-----------------------------------------------------------------------------
 
+# Standard library imports
+from typing import Any
+
 # Bokeh imports
-from ...core.properties import Either, Instance, List
+from ...core.property.container import List
+from ...core.property.either import Either
+from ...core.property.instance import Instance
 from ..dom import DOMNode
 from .ui_element import UIElement
 
@@ -46,7 +51,7 @@ class Pane(UIElement):
     """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     elements = List(Either(Instance(UIElement), Instance(DOMNode)), default=[], help="""

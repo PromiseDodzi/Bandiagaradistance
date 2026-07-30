@@ -192,7 +192,7 @@ class ToolToggleBase(ToolBase):
         super().__init__(*args, **kwargs)
 
     def trigger(self, sender, event, data=None):
-        """Calls `enable` or `disable` based on `toggled` value."""
+        """Calls `enable` or `disable` based on `~ToolToggleBase.toggled` value."""
         if self._toggled:
             self.disable(event)
         else:
@@ -203,7 +203,7 @@ class ToolToggleBase(ToolBase):
         """
         Enable the toggle tool.
 
-        `trigger` calls this method when `toggled` is False.
+        `trigger` calls this method when `~ToolToggleBase.toggled` is False.
         """
         pass
 
@@ -211,7 +211,7 @@ class ToolToggleBase(ToolBase):
         """
         Disable the toggle tool.
 
-        `trigger` call this method when `toggled` is True.
+        `trigger` call this method when `~ToolToggleBase.toggled` is True.
 
         This can happen in different circumstances.
 
@@ -261,9 +261,9 @@ class ToolSetCursor(ToolBase):
         self._last_cursor = self._default_cursor
         self.toolmanager.toolmanager_connect('tool_added_event',
                                              self._add_tool_cbk)
-        # process current tools
-        for tool in self.toolmanager.tools.values():
-            self._add_tool(tool)
+        for tool in self.toolmanager.tools.values():  # process current tools
+            self._add_tool_cbk(mpl.backend_managers.ToolEvent(
+                'tool_added_event', self.toolmanager, tool))
 
     def set_figure(self, figure):
         if self._id_drag:
@@ -273,24 +273,15 @@ class ToolSetCursor(ToolBase):
             self._id_drag = self.canvas.mpl_connect(
                 'motion_notify_event', self._set_cursor_cbk)
 
-    def _tool_trigger_cbk(self, event):
-        if event.tool.toggled:
-            self._current_tool = event.tool
-        else:
-            self._current_tool = None
-        self._set_cursor_cbk(event.canvasevent)
-
-    def _add_tool(self, tool):
-        """Set the cursor when the tool is triggered."""
-        if getattr(tool, 'cursor', None) is not None:
-            self.toolmanager.toolmanager_connect('tool_trigger_%s' % tool.name,
-                                                 self._tool_trigger_cbk)
-
     def _add_tool_cbk(self, event):
         """Process every newly added tool."""
-        if event.tool is self:
-            return
-        self._add_tool(event.tool)
+        if getattr(event.tool, 'cursor', None) is not None:
+            self.toolmanager.toolmanager_connect(
+                f'tool_trigger_{event.tool.name}', self._tool_trigger_cbk)
+
+    def _tool_trigger_cbk(self, event):
+        self._current_tool = event.tool if event.tool.toggled else None
+        self._set_cursor_cbk(event.canvasevent)
 
     def _set_cursor_cbk(self, event):
         if not event or not self.canvas:
@@ -391,8 +382,8 @@ class ToolGrid(ToolBase):
         sentinel = str(uuid.uuid4())
         # Trigger grid switching by temporarily setting :rc:`keymap.grid`
         # to a unique key and sending an appropriate event.
-        with cbook._setattr_cm(event, key=sentinel), \
-             mpl.rc_context({'keymap.grid': sentinel}):
+        with (cbook._setattr_cm(event, key=sentinel),
+              mpl.rc_context({'keymap.grid': sentinel})):
             mpl.backend_bases.key_press_handler(event, self.figure.canvas)
 
 
@@ -406,8 +397,8 @@ class ToolMinorGrid(ToolBase):
         sentinel = str(uuid.uuid4())
         # Trigger grid switching by temporarily setting :rc:`keymap.grid_minor`
         # to a unique key and sending an appropriate event.
-        with cbook._setattr_cm(event, key=sentinel), \
-             mpl.rc_context({'keymap.grid_minor': sentinel}):
+        with (cbook._setattr_cm(event, key=sentinel),
+              mpl.rc_context({'keymap.grid_minor': sentinel})):
             mpl.backend_bases.key_press_handler(event, self.figure.canvas)
 
 
@@ -677,9 +668,6 @@ class ZoomPanBase(ToolToggleBase):
     def trigger(self, sender, event, data=None):
         self.toolmanager.get_tool(_views_positions).add_figure(self.figure)
         super().trigger(sender, event, data)
-        new_navigate_mode = self.name.upper() if self.toggled else None
-        for ax in self.figure.axes:
-            ax.set_navigate_mode(new_navigate_mode)
 
     def scroll_zoom(self, event):
         # https://gist.github.com/tacaswell/3144287
@@ -946,6 +934,7 @@ class ToolCopyToClipboardBase(ToolBase):
         self.toolmanager.message_event(message, self)
 
 
+#: The default tools to add to a tool manager.
 default_tools = {'home': ToolHome, 'back': ToolBack, 'forward': ToolForward,
                  'zoom': ToolZoom, 'pan': ToolPan,
                  'subplots': ConfigureSubplotsBase,
@@ -965,12 +954,13 @@ default_tools = {'home': ToolHome, 'back': ToolBack, 'forward': ToolForward,
                  'copy': ToolCopyToClipboardBase,
                  }
 
+#: The default tools to add to a container.
 default_toolbar_tools = [['navigation', ['home', 'back', 'forward']],
                          ['zoompan', ['pan', 'zoom', 'subplots']],
                          ['io', ['save', 'help']]]
 
 
-def add_tools_to_manager(toolmanager, tools=default_tools):
+def add_tools_to_manager(toolmanager, tools=None):
     """
     Add multiple tools to a `.ToolManager`.
 
@@ -980,14 +970,16 @@ def add_tools_to_manager(toolmanager, tools=default_tools):
         Manager to which the tools are added.
     tools : {str: class_like}, optional
         The tools to add in a {name: tool} dict, see
-        `.backend_managers.ToolManager.add_tool` for more info.
+        `.backend_managers.ToolManager.add_tool` for more info. If not specified, then
+        defaults to `.default_tools`.
     """
-
+    if tools is None:
+        tools = default_tools
     for name, tool in tools.items():
         toolmanager.add_tool(name, tool)
 
 
-def add_tools_to_container(container, tools=default_toolbar_tools):
+def add_tools_to_container(container, tools=None):
     """
     Add multiple tools to the container.
 
@@ -999,9 +991,11 @@ def add_tools_to_container(container, tools=default_toolbar_tools):
     tools : list, optional
         List in the form ``[[group1, [tool1, tool2 ...]], [group2, [...]]]``
         where the tools ``[tool1, tool2, ...]`` will display in group1.
-        See `.backend_bases.ToolContainerBase.add_tool` for details.
+        See `.backend_bases.ToolContainerBase.add_tool` for details. If not specified,
+        then defaults to `.default_toolbar_tools`.
     """
-
+    if tools is None:
+        tools = default_toolbar_tools
     for group, grouptools in tools:
         for position, tool in enumerate(grouptools):
             container.add_tool(tool, group, position)

@@ -27,9 +27,13 @@ log = logging.getLogger(__name__)
 # Imports
 #-----------------------------------------------------------------------------
 
+# Standard library imports
+from typing import Any
+
 # Bokeh imports
-from ..core.has_props import abstract
-from ..core.properties import Instance, List
+from ..core.has_props import HasProps, abstract
+from ..core.property.container import List
+from ..core.property.instance import Instance
 from ..model import Model
 from .graphics import Decoration
 
@@ -39,7 +43,12 @@ from .graphics import Decoration
 
 __all__ = (
     'ConnectedXYGlyph',
+    'FillGlyph',
     'Glyph',
+    'HatchGlyph',
+    'LineGlyph',
+    'RadialGlyph',
+    'TextGlyph',
     'XYGlyph',
 )
 
@@ -54,7 +63,7 @@ class Glyph(Model):
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     decorations = List(Instance(Decoration), default=[], help="""
@@ -76,7 +85,18 @@ class XYGlyph(Glyph):
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+@abstract
+class RadialGlyph(XYGlyph):
+    ''' Base class of glyphs with `x` and `y` coordinate attributes and
+    a radius specification.
+
+    '''
+
+    # explicit __init__ to support Init signatures
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 @abstract
@@ -87,47 +107,47 @@ class ConnectedXYGlyph(XYGlyph):
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 @abstract
-class LineGlyph(Glyph):
+class LineGlyph(HasProps):
     ''' Glyphs with line properties
 
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 @abstract
-class FillGlyph(Glyph):
+class FillGlyph(HasProps):
     ''' Glyphs with fill properties
 
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 @abstract
-class TextGlyph(Glyph):
+class TextGlyph(HasProps):
     ''' Glyphs with text properties
 
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 @abstract
-class HatchGlyph(Glyph):
+class HatchGlyph(HasProps):
     ''' Glyphs with Hatch properties
 
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 #-----------------------------------------------------------------------------

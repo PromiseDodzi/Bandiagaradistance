@@ -17,20 +17,17 @@ log = logging.getLogger(__name__)
 # Imports
 #-----------------------------------------------------------------------------
 
+# Standard library imports
+from typing import Any
+
 # Bokeh imports
 from ..core.has_props import abstract
-from ..core.properties import (
-    AnyRef,
-    Bool,
-    Instance,
-    Int,
-    NonEmpty,
-    Nullable,
-    Required,
-    RestrictedDict,
-    Seq,
-    String,
-)
+from ..core.property.any import AnyRef
+from ..core.property.container import NonEmpty, RestrictedDict, Seq
+from ..core.property.instance import Instance
+from ..core.property.nullable import Nullable
+from ..core.property.primitive import Bool, Int, String
+from ..core.property.required import Required
 from ..model import Model
 
 #-----------------------------------------------------------------------------
@@ -62,7 +59,7 @@ class Filter(Model):
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     def __invert__(self) -> Filter:
@@ -84,14 +81,14 @@ class AllIndices(Filter):
     """ Trivial filter that includes all indices in a dataset. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 class InversionFilter(Filter):
     """ Inverts indices resulting from another filter. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     operand = Required(Instance(Filter), help="""
@@ -103,7 +100,7 @@ class CompositeFilter(Filter):
     """ Base class for composite filters. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     operands = Required(NonEmpty(Seq(Instance(Filter))), help="""
@@ -114,28 +111,28 @@ class IntersectionFilter(CompositeFilter):
     """ Computes intersection of indices resulting from other filters. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 class UnionFilter(CompositeFilter):
     """ Computes union of indices resulting from other filters. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 class DifferenceFilter(CompositeFilter):
     """ Computes difference of indices resulting from other filters. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 class SymmetricDifferenceFilter(CompositeFilter):
     """ Computes symmetric difference of indices resulting from other filters. """
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
 class IndexFilter(Filter):
@@ -168,15 +165,15 @@ class BooleanFilter(Filter):
         super().__init__(**kwargs)
 
 class GroupFilter(Filter):
-    ''' A ``GroupFilter`` represents the rows of a ``ColumnDataSource`` where the values of the categorical
-    column column_name match the group variable.
+    ''' A ``GroupFilter`` represents the rows of a ``ColumnDataSource`` where the
+    values of the column indicated by ``column_name`` match the ``group`` variable.
     '''
 
     column_name = Required(String, help="""
     The name of the column to perform the group filtering operation on.
     """)
 
-    group = Required(String, help="""
+    group = Required(AnyRef, help="""
     The value of the column indicating the rows of data to keep.
     """)
 
@@ -199,7 +196,7 @@ class CustomJSFilter(Filter):
     '''
 
     # explicit __init__ to support Init signatures
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
     args = RestrictedDict(String, AnyRef, disallow=("source",), help="""

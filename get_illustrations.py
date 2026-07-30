@@ -260,39 +260,61 @@ class Getillustrations:
         tiles = EsriImagery()
         map_with_points = tiles * points_plot
         map_with_points.opts(title='Linguistic cluster with Physical Geography', tools=['hover'])
-        hv.save(map_with_points, 'cluster_map_with_physical_geography.html', backend='bokeh')
-
+        hv.save(map_with_points, 'illustrations/cluster_map_with_physical_geography.html', backend='bokeh')
+        
     def plot_tau_tui(self):
         "returns a bivariate distribution of Kendall's Tau scores and TUI scores"
-        direct_cluster_1_langs=self.sorted_ling[self.sorted_ling["Cluster"]==1]["Language"].values
-        direct_cluster_2_langs=self.sorted_ling[self.sorted_ling["Cluster"]==2]["Language"].values
-        direct_cluster_3_langs=self.sorted_ling[self.sorted_ling["Cluster"]==3]["Language"].values
-        direct_cluster_4_langs=self.sorted_ling[self.sorted_ling["Cluster"]==4]["Language"].values
-        
-        geog_cluster_1_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_1_langs]
-        geog_cluster_2_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_2_langs]
-        geog_cluster_3_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_3_langs]
-        geog_cluster_4_langs=[x for x in self.sorted_geog["Language"].values if x in direct_cluster_4_langs]
-        
-        ling=[direct_cluster_1_langs, direct_cluster_2_langs, direct_cluster_3_langs, direct_cluster_4_langs]
-        geog=[geog_cluster_1_langs, geog_cluster_2_langs, geog_cluster_3_langs, geog_cluster_4_langs]
-        
-        tau_list=[]
-        cluster=0
-        for li, ge in zip(ling,geog):
-            tau, _ = kendalltau(li, ge)
-            rho, _ = spearmanr(li, ge)
-        
-            cluster +=1 
-            tau, rho
+        direct_cluster_1_langs = self.sorted_ling[self.sorted_ling["Cluster"]==1]["Language"].values
+        direct_cluster_2_langs = self.sorted_ling[self.sorted_ling["Cluster"]==2]["Language"].values
+        direct_cluster_3_langs = self.sorted_ling[self.sorted_ling["Cluster"]==3]["Language"].values
+        direct_cluster_4_langs = self.sorted_ling[self.sorted_ling["Cluster"]==4]["Language"].values
+
+        geog_cluster_1_langs = [x for x in self.sorted_geog["Language"].values if x in direct_cluster_1_langs]
+        geog_cluster_2_langs = [x for x in self.sorted_geog["Language"].values if x in direct_cluster_2_langs]
+        geog_cluster_3_langs = [x for x in self.sorted_geog["Language"].values if x in direct_cluster_3_langs]
+        geog_cluster_4_langs = [x for x in self.sorted_geog["Language"].values if x in direct_cluster_4_langs]
+
+        ling = [direct_cluster_1_langs, direct_cluster_2_langs, direct_cluster_3_langs, direct_cluster_4_langs]
+        geog = [geog_cluster_1_langs, geog_cluster_2_langs, geog_cluster_3_langs, geog_cluster_4_langs]
+
+        # full ordering of languages in each overall sorted list, used to derive numeric ranks
+        ling_order = list(self.sorted_ling["Language"].values)
+        geog_order = list(self.sorted_geog["Language"].values)
+
+        tau_list = []
+        for cluster, (li, ge) in enumerate(zip(ling, geog), start=1):
+            li = list(li)
+            ge = list(ge)
+            common = [lang for lang in li if lang in ge]
+
+            print(f"Cluster {cluster}: len(li)={len(li)}, len(ge)={len(ge)}, common={len(common)}")
+
+            tau = np.nan
+            if len(common) < 2:
+                print(f"  -> skipping cluster {cluster}: fewer than 2 shared languages")
+            else:
+                # convert language names to their numeric rank position in each ordering
+                li_ranks = [ling_order.index(lang) for lang in common]
+                ge_ranks = [geog_order.index(lang) for lang in common]
+                try:
+                    tau, _ = kendalltau(li_ranks, ge_ranks)
+                except Exception as e:
+                    print(f"  -> kendalltau failed for cluster {cluster}: {e}")
+
             tau_list.append(tau)
-        
-        tui=[max(3,0)/3,max(2, 1)/3,max(4, 1)/5, max(1, 5)/6]
-        tui_tau=pd.DataFrame({"tui":tui, "tau":tau_list})
-        sns.scatterplot(data=tui_tau,x="tui",y="tau",hue=tui_tau.index+1,palette="viridis")
-        plt.xlabel("TUI")
-        plt.ylabel("Tau")
-        plt.title("Kendall's Tau correlation and Topological Uniformity Index")
+
+        tui = [max(3,0)/3, max(2, 1)/3, max(4, 1)/5, max(1, 5)/6]
+        tui_tau = pd.DataFrame({"tui": tui, "tau": tau_list})
+        tui_tau_clean = tui_tau.dropna(subset=["tau"])
+
+        if tui_tau_clean.empty:
+            print("No valid tau values to plot — check the cluster diagnostics printed above.")
+            return
+
+        sns.scatterplot(data=tui_tau_clean, x="tui", y="tau", hue=tui_tau_clean.index+1, palette="viridis")
+        plt.xlabel("Tau")
+        plt.ylabel("TUI")
+        plt.title("Kendall's Tau correlation and Topographical Uniformity Index")
         plt.savefig("illustrations/tau_vs_tui.png")
 
     def chi2_and_p_values_draw(self,ax, chi2_stats, p_values, title):

@@ -1,56 +1,95 @@
-from lingpy import *
+from lingpy import Wordlist
+import pandas as pd
 import collections
 from tabulate import tabulate
 
 
 def get_coverage():
-    data="heathdogon-ungrouped.tsv"
-    wl = Wordlist(data)
 
+    data = "processed_data/value_cleaned_data.tsv"
+
+    df = pd.read_csv(data,sep=";",low_memory=False,dtype=str).fillna("")
+    
+
+    # Required LingPy columns
+    df["doculect"] = df["glottoname"].str.replace(" ", "_", regex=False)
+    df["concept"] = df["concepticon_gloss"].str.replace(" ", "_", regex=False)
+    df["tokens"] = df["cleaned_value_org"]
+
+    # remove rows without a lexical form
+    df = df[df["tokens"] != ""]
+
+    # Create LingPy dictionary
+    D = {
+        0: [
+            "doculect",
+            "concept",
+            "tokens",
+            "concepticon_id"
+        ]
+    }
+
+    for i, row in enumerate(df.itertuples(index=False), start=1):
+        D[i] = [row.doculect,row.concept,row.tokens,row.concepticon_id]
+
+    wl = Wordlist(D)
+
+    # Language coverage
     retain = []
+
     for language, coverage in wl.coverage().items():
         if coverage > 288:
-            retain += [language]
+            retain.append(language)
 
-    # create new wordlist
-    new_wl = {0: [c for c in wl.columns]}
-    for idx, language in wl.iter_rows("doculect"):
-        if language in retain:
-            new_wl[idx] = wl[idx]
-    new_wl = Wordlist(new_wl)
+    print(f"Retaining {len(retain)} languages")
 
-    # select concepts
+    # Restrict languages
+    header = D[0]
+    new = {0: header}
+
+    for idx in wl:
+        if wl[idx, "doculect"] in retain:
+            new[idx] = [wl[idx, col] for col in header]
+
+    new_wl = Wordlist(new)
+
+    # Count concept coverage
     concepts = collections.defaultdict(lambda: {k: 0 for k in new_wl.cols})
-    for idx, concept, language in new_wl.iter_rows("concept", "doculect"):
-        concepts[concept][language] = 1
 
-    # determine if concept is in Swadesh range
-    swadesh = {}
-    for idx, concept, sw in wl.iter_rows("concept", "swadesh"):
-        swadesh[concept] = 1 if sw == "1" else 0
+    for idx in new_wl:
+        c = new_wl[idx, "concept"]
+        l = new_wl[idx, "doculect"]
+        concepts[c][l] = 1
 
-    # restrict to 300 concepts
-    sorted_concepts = sorted(concepts, key=lambda x: (swadesh[x],
-                                                    sum(concepts[x].values())),
-                            reverse=True)[:300]
+    # Select the 300 best-covered concepts
+    sorted_concepts = sorted(concepts,key=lambda x: sum(concepts[x].values()),reverse=True)[:300]
 
-    # create new wordlist
-    new_wl = {0: [c for c in wl.columns]}
-    for idx, language, concept in wl.iter_rows("doculect", "concept"):
-        if language in retain and concept in sorted_concepts:
-            new_wl[idx] = wl[idx]
 
-    new_wl = Wordlist(new_wl)
-    new_wl.output('tsv', filename=data[:-4] + "-shortened", prettify=False,
-                ignore="all")
-    print("New Wordlist has {0} Languages and {1} concepts".format(
-        new_wl.width,
-        new_wl.height))
+    # Final wordlist
+    final = {0: header}
+
+    for idx in wl:
+        if (
+            wl[idx, "doculect"] in retain
+            and
+            wl[idx, "concept"] in sorted_concepts
+        ):
+            final[idx] = [wl[idx, col] for col in header]
+
+    final_wl = Wordlist(final)
+
+    final_wl.output("tsv",filename="processed_data/value_cleaned_data-shortened",prettify=False,ignore="all")
+
+    print(f"\nLanguages : {final_wl.width}")
+    print(f"Concepts  : {final_wl.height}")
+
     table = []
-    for language, coverage in new_wl.coverage().items():
-        table += [[language, coverage, coverage / new_wl.height]]
-    print(tabulate(table, headers=["language", "items", "coverage"],
-                floatfmt=".2f"))
+
+    for language, coverage in final_wl.coverage().items():
+        table.append([language,coverage,coverage / final_wl.height])
+
+    print(tabulate(table,headers=["language", "items", "coverage"],floatfmt=".2f"))
+
 
 if __name__ == "__main__":
     get_coverage()

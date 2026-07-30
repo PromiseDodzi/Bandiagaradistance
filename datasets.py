@@ -236,3 +236,8 @@ class GetDatasets:
         df["geog_dist"]=geog_list
         df_1=df[["Language", "ling_dist","geog_dist", "language_tui", "cluster"]]
         return df_1
+    
+if __name__=="__main__":
+    dat=GetDatasets()
+    # print(dat.lang_cluster_tui_individual())
+    # print((0.4/3)+(0.4/3)+(0.2/3))
