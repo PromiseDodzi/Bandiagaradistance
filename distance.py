@@ -59,7 +59,7 @@ def get_distance():
     alms = Alignments(lex, transcription="tokens", ref="cogid")
     alms.align(method="library")
 
-    alms.output("tsv", filename="processed_data/" + data[:-4] + "-aligned", ignore="all",prettify=False)
+    alms.output("tsv", filename= data[:-4] + "-aligned", ignore="all",prettify=False)
 
     distance = alms.get_distances(method="lexstat", ref="cogid")
     taxa = alms.taxa
